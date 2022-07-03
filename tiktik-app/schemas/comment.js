@@ -1,16 +1,16 @@
 export default {
     name: "comment",
-    titile: "comment",
-    type: document,
+    titile: "Comment",
+    type: "document",
     fields: [
       {
         name: "postedBy",
-        title: "comment name",
-        type: "string",
+        title: "Posted By",
+        type: "postedBy",
       },
       {
-        name: "image",
-        title: "image",
+        name: "comment",
+        title: "Comment",
         type: "string",
       },
     ],

@@ -1,7 +1,7 @@
 export default {
   name: "user",
   titile: "User",
-  type: document,
+  type: 'document',
   fields: [
     {
       name: "username",
@@ -10,7 +10,7 @@ export default {
     },
     {
       name: "image",
-      title: "image",
+      title: "Image",
       type: "string",
     },
   ],
