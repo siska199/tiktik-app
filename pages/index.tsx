@@ -1,10 +1,12 @@
 import type { NextPage } from 'next'
+import LayoutPage from '../layouts/LayoutPage'
+
 
 const Home: NextPage = () => {
   return (
-    <div>
-      Tik tik
-    </div>
+    <LayoutPage>
+
+    </LayoutPage>
   )
 }
 
