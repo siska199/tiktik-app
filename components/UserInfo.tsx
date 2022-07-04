@@ -1,8 +1,43 @@
 import React from 'react'
+import {MdVerified} from "react-icons/md"
+interface Props{
+  image : string;
+  username: string;
+  name : string;
+  caption? : string
+  type? : string;
+}
 
-const UserInfo = () => {
+
+const UserInfo : React.FC<Props> = ({image,username,name, type, caption}) => {
+  const style = {
+    username : "text-[0.7rem] font-semibold text-gray-400",
+    caption : "font-normal"
+  }
+  let size = ""
+  let h1 = ""
+  switch(type){
+    case "suggested":
+      size = "w-8 h-8 "
+      h1 = "text-[0.9rem]" 
+      break;
+    case "post":
+      size ="w-10 h-10"
+      break;
+  }
+
   return (
-    <div>UserInfo</div>
+    <section className='flex space-x-2'>
+      <img src={image} className={`${size} rounded-full`} />
+      <div className=''>
+        <h1 className={`flex ${h1} items-center gap-1 font-bold`}>
+          {username}
+          <MdVerified className='text-sky-400 text-[0.9rem]'/>
+          {type=="post"&&<p className={`${style.username}`}>{username}</p>}
+        </h1>
+        <p className={ `${type=="post"?style.caption:style.username}`}>{type=="post"?caption:name}</p>
+      </div>
+    </section>
   )
 }
 

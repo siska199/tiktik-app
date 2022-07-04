@@ -11,8 +11,10 @@ const LayoutPage : React.FC<LayoutProps>= ({children,style}) => {
   return (
     <article className='container'>
         <Navbar/>
-        <Sidebar/>
-      {children}
+        <div className='flex'>
+          <Sidebar/>
+          {children}
+        </div>
     </article>
   )
 }

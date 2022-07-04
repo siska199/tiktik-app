@@ -41,6 +41,6 @@
 
 @layer components{
   .container{
-    @apply max-w-[1100px] border-2 min-h-screen mx-auto
+    @apply max-w-[1100px] min-h-screen mx-auto
   }
 }
