@@ -14,7 +14,7 @@ const Post : React.FC<Props> = ({image, name, username, caption, video}) => {
   return (
     <section className='p-5  md:w-[80%] ml-auto '>
       <UserInfo image={image} username={username} name={name} type="post" caption={caption}/>
-      <div className='border-2 w-[92%] ml-auto my-5'>
+      <div className='border-[0.005rem] w-[92%] ml-auto my-5'>
         <Video url={video}/>
       </div>
     </section>
