@@ -16,10 +16,10 @@ const Post : React.FC<Props> = ({image, name, username, caption, video}) => {
     <section className='p-5  md:w-[80%] ml-auto '>
       <UserInfo image={image} username={username} name={name} type="post" caption={caption}/>
       <div className='border-[0.005rem] w-[92%] ml-auto my-5'>
-        <Video url={video} modalDetail={modalDetail} setModalDetail={setModalDetail}/>
+        <Video url={video} type="post" modalDetail={modalDetail} setModalDetail={setModalDetail}/>
       </div>
       {
-        modalDetail&&<DetailPost setModalDetail={setModalDetail}/>
+        modalDetail&&<DetailPost modalDetail={modalDetail}  setModalDetail={setModalDetail}/>
       }
     </section>
   )

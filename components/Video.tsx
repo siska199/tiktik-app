@@ -1,13 +1,19 @@
-import React, {useEffect, useRef, useState, Dispatch, SetStateAction } from 'react'
+import React, {useRef, useState, } from 'react'
+import { useDispatch } from 'react-redux'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
 import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
+import {handleModalDetail} from "../redux/actions/postActions"
 
 interface Props {
   url : string;
   modalDetail? : boolean;
   setModalDetail? : React.Dispatch<React.SetStateAction<boolean>>
   type? : string;
+  customeStyle ? : {
+    video? : string;
+
+  }
 }
 
 declare global {
@@ -16,7 +22,8 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type}) => {
+const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, customeStyle}) => {
+  const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
@@ -30,33 +37,47 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type}) => {
     setMuted(!muted)
   }
   const handleOnClick = ()=>{
-    type=="detail" && setModalDetail && setModalDetail(!modalDetail)
+    switch(type){
+      case "post":
+        setModalDetail && setModalDetail(!modalDetail)
+        dispatch(handleModalDetail(!modalDetail))
+        break;
+      case "detail":
+        handlePausedUnpause()
+      default:
+        break;
+    }
   }
   return (
-    <section>
+    <section className=''>
       <video 
+        className={`cursor-pointer ${customeStyle?.video}`}
         muted={muted} 
         ref={refVideo} 
         src={url}
-        className="cursor-pointer"
         onClick={()=>handleOnClick()}
       />
-      <div className='flex gap-3 p-2 text-[1.2rem]'>
-        {
-          play?(
-            <AiOutlinePause onClick={()=>handlePausedUnpause()}/>
-          ):(
-            <FiPlay onClick={()=>handlePausedUnpause()}/>
-          )
-        }
-        {
-          muted?(
-            <GiSpeakerOff onClick={()=>handleAudio()}/>
-          ):(
-            <GiSpeaker onClick={()=>handleAudio()} />
-          )
-        }
-      </div>
+
+      {
+        type=="post" && (
+        <div className='flex gap-3 p-2 text-[1.2rem]'>
+          {
+            play?(
+              <AiOutlinePause onClick={()=>handlePausedUnpause()}/>
+            ):(
+              <FiPlay onClick={()=>handlePausedUnpause()}/>
+            )
+          }
+          {
+            muted?(
+              <GiSpeakerOff onClick={()=>handleAudio()}/>
+            ):(
+              <GiSpeaker onClick={()=>handleAudio()} />
+            )
+          }
+        </div>
+        )
+      }
     </section>
   )
 }
