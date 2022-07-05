@@ -63,16 +63,16 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, custom
         <div className='flex gap-3 p-2 text-[1.2rem]'>
           {
             play?(
-              <AiOutlinePause onClick={()=>handlePausedUnpause()}/>
+              <AiOutlinePause className='cursor-pointer' onClick={()=>handlePausedUnpause()}/>
             ):(
-              <FiPlay onClick={()=>handlePausedUnpause()}/>
+              <FiPlay className='cursor-pointer' onClick={()=>handlePausedUnpause()}/>
             )
           }
           {
             muted?(
-              <GiSpeakerOff onClick={()=>handleAudio()}/>
+              <GiSpeakerOff className='cursor-pointer' onClick={()=>handleAudio()}/>
             ):(
-              <GiSpeaker onClick={()=>handleAudio()} />
+              <GiSpeaker className='cursor-pointer' onClick={()=>handleAudio()} />
             )
           }
         </div>
