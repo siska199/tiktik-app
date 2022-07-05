@@ -20,24 +20,6 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type}) => {
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
-
-  // useEffect(()=>{
-  //   window.addEventListener('scroll',handleSroll)
-  //   return ()=>{
-  //     window.removeEventListener("scroll", handleSroll)
-  //   }  
-  // },[])
-
-  // const handleSroll = ()=>{
-  //   const distanceElToTopScreen : number | undefined = refVideo.current?.getBoundingClientRect()?.top
-  //   if(distanceElToTopScreen) if(distanceElToTopScreen>0 && distanceElToTopScreen<200){
-  //     handlePausedUnpause(true)
-  //     setPlay(true)
-  //   }else{
-  //     handlePausedUnpause(false)
-  //     setPlay(false)
-  //   }
-  // }
   
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
@@ -48,7 +30,7 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type}) => {
     setMuted(!muted)
   }
   const handleOnClick = ()=>{
-    type=="detail" && setModalDetail(!modalDetail)
+    type=="detail" && setModalDetail && setModalDetail(!modalDetail)
   }
   return (
     <section>
