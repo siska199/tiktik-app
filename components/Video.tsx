@@ -57,7 +57,21 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, custom
         src={url}
         onClick={()=>handleOnClick()}
       />
-
+      {
+        type=="detail" && (
+          <div className='bg-white/30 hidden group-hover:flex text-white h-full w-full absolute top-0 left-0'>
+            <div className='m-auto '>
+            {
+              play?(
+                <AiOutlinePause className='cursor-pointer text-[4rem] relative z-20' onClick={()=>handlePausedUnpause()}/>
+              ):(
+                <FiPlay className='cursor-pointer text-[4rem] relative z-20' onClick={()=>handlePausedUnpause()}/>
+              )
+            }
+            </div>
+          </div>
+        )
+      }
       {
         type=="post" && (
         <div className='flex gap-3 p-2 text-[1.2rem]'>

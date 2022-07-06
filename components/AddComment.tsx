@@ -11,7 +11,6 @@ const AddComment : React.FC = () => {
   const handleSubmitByPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) : void=>{
     if(e.key=="Enter"){
       e.preventDefault()
-
       handleSubmit()
     }
   }
