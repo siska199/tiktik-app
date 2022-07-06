@@ -1,5 +1,5 @@
 import React, {useRef, useState, } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
 import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
@@ -39,6 +39,7 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, custom
   const handleOnClick = ()=>{
     switch(type){
       case "post":
+        play&&handlePausedUnpause()
         setModalDetail && setModalDetail(!modalDetail)
         dispatch(handleModalDetail(!modalDetail))
         break;
@@ -55,23 +56,10 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, custom
         muted={muted} 
         ref={refVideo} 
         src={url}
+        onEnded= {()=>setPlay(false)}
         onClick={()=>handleOnClick()}
+        controls={type=="detail"?true:false}
       />
-      {
-        type=="detail" && (
-          <div className='bg-white/30 hidden group-hover:flex text-white h-full w-full absolute top-0 left-0'>
-            <div className='m-auto '>
-            {
-              play?(
-                <AiOutlinePause className='cursor-pointer text-[4rem] relative z-20' onClick={()=>handlePausedUnpause()}/>
-              ):(
-                <FiPlay className='cursor-pointer text-[4rem] relative z-20' onClick={()=>handlePausedUnpause()}/>
-              )
-            }
-            </div>
-          </div>
-        )
-      }
       {
         type=="post" && (
         <div className='flex gap-3 p-2 text-[1.2rem]'>

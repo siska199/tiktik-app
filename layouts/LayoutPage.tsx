@@ -9,7 +9,6 @@ interface LayoutProps {
 
 const LayoutPage : React.FC<LayoutProps>= ({children,style}) => {
   const modalDetail = useSelector((state:any)=> state.post.modalDetail)
-  console.log("modaldetail: ", modalDetail)
   return (
     <article className={`container ${modalDetail&&"fixed"}`}>
         <Navbar/>
