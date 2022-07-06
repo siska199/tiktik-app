@@ -4,16 +4,17 @@ import Sidebar from "../components/Sidebar"
 import {useSelector} from "react-redux"
 interface LayoutProps {
   children? :ReactChild | ReactChild[] ;
-  style? : String 
+  style? : String;
+  type? : string 
 }
 
-const LayoutPage : React.FC<LayoutProps>= ({children,style}) => {
+const LayoutPage : React.FC<LayoutProps>= ({children,style, type}) => {
   const modalDetail = useSelector((state:any)=> state.post.modalDetail)
   return (
-    <article className={`container ${modalDetail&&"fixed"}`}>
-        <Navbar/>
+    <article className={`container ${type=="uploadVideo"&&"max-w-[1500px]"} ${modalDetail&&"fixed"}`}>
+        <Navbar type={type}/>
         <div className='flex'>
-          <Sidebar/>
+          {type!="uploadVideo"&&<Sidebar/>}
           {children}
         </div>
     </article>

@@ -1,13 +1,18 @@
+import React from "react"
 import Image from "next/image"
 
 import {AiOutlineLogout,AiOutlinePlus} from "react-icons/ai"
 import {FiSearch} from "react-icons/fi"
 import Search from "./Search"
 
-const Navbar = () => {
+interface NavbarProps {
+  type? : string;
+}
+
+const Navbar : React.FC<NavbarProps> = ({type}) => {
 
   return (
-    <nav className="sticky top-0 bg-white border-b-[0.05rem] flex justify-between items-center px-2 md:px-0 py-2 space-x-2">
+    <nav className={`${type=="uploadVideo"&&"!max-w-[1100px] mx-auto"} sticky top-0 bg-white border-b-[0.05rem] flex justify-between items-center px-2 md:px-0 py-2 space-x-2`}>
       <img className="w-20 object-contain md:w-[8rem] md:h-10" src="/tiktik-logo.png"/>
       <Search/>
       <section className="flex justify-between items-center space-x-3 md:space-x-8 ">
