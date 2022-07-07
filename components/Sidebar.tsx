@@ -22,7 +22,7 @@ const Sidebar = () => {
         <div className="flex flex-col md:flex-row flex-wrap gap-[1.5rem] md:gap-[0.4rem] my-3">
           {
             dataTopics.map((data,i)=>(
-              <Topic key={i} title={data.title} icon={data.icon} />
+              <Topic active={data.title.toLowerCase()==topic?true:false} key={i} title={data.title} icon={data.icon} />
             ))
           }
         </div>

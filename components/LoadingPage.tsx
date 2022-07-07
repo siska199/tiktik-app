@@ -1,6 +1,7 @@
 import React from 'react'
 import Lottie from "lottie-react"
 import animation from "../public/loading.json"
+
 const LoadingPage = () => {
   return (
     <article className='w-screen bg-white h-screen flex justify-center items-center'>

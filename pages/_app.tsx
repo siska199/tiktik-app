@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) : JSX.Element {
   Router.events.on('routeChangeStart',url=>{
     if(!url.includes("?")) setLoading(true)
   })
+  
   Router.events.on('routeChangeComplete',url=>{
     if(!url.includes("?")) setTimeout(()=>{
       setLoading(false)
