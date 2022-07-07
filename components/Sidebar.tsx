@@ -1,4 +1,5 @@
 import {AiFillHome} from "react-icons/ai"
+import { useRouter } from "next/router"
 import TitleSectionSideNavbar from "./TitleSectionSideNavbar"
 import { dataTopics,dataSuggestedAccounts  } from "../utils/data"
 import Topic from "./Topic"
@@ -6,6 +7,9 @@ import UserInfo from "./UserInfo"
 import Footer from "./Footer"
 
 const Sidebar = () => {
+  const router = useRouter()
+  const {topic} = router.query
+  console.log("topc: ", topic)
   return (
     <section className="sticky top-[3.5rem] flex flex-col flex-[0.1] md:flex-[0.3] max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
       <div className="hidden md:flex md:p-5 md:border-b-[0.05rem] text-main space-x-3 items-center justify-center md:justify-start">

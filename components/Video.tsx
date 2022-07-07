@@ -58,7 +58,7 @@ const Video : React.FC<Props> = ({url, modalDetail, setModalDetail, type, custom
         src={url}
         onEnded= {()=>setPlay(false)}
         onClick={()=>handleOnClick()}
-        controls={type=="detail"?true:false}
+        controls={type =="post"?false:true}
       />
       {
         type=="post" && (

@@ -109,3 +109,15 @@ export const dataDetail = {
   })),
   likes : 50,
 }
+
+
+export const dataCategory : string[]= [
+  "Development",
+  "Comedy",
+  "Gaming",
+  "Food",
+  "Dance",
+  "Beauty",
+  "Animals",
+  "Sports"
+]

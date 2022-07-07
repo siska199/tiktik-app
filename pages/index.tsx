@@ -5,7 +5,7 @@ import { dataPosts } from '../utils/data'
 
 const Home: NextPage = () => {
   return (
-    <LayoutPage>
+    <LayoutPage type="homepage">
       <div className='flex-[0.7] flex-col flex-grow py-5'>
         {
           dataPosts.map((data,i)=>(
