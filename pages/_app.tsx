@@ -13,11 +13,8 @@ function MyApp({ Component, pageProps : {session, ...pageProps} }: AppProps) : J
   Router.events.on('routeChangeStart',url=>{
     if(!url.includes("?")) setLoading(true)
   })
-  
   Router.events.on('routeChangeComplete',url=>{
-    if(!url.includes("?")) setTimeout(()=>{
-      setLoading(false)
-    },500)
+    if(!url.includes("?")) setLoading(false)
   })
   return(
     <SessionProvider session={session}>

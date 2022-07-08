@@ -19,6 +19,7 @@ module.exports = {
         main: "#f51997",
       },
       backgroundImage: {
+        "detail-video":"url('https://i.pinimg.com/564x/8b/74/c5/8b74c586790680ed316c1979c80230e4.jpg')",
         "blurred-img":
           "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsaaJ7s4lqcBF4IDROVPzrlL5fexcwRmDlnuEYQenWTt1DejFY5kmYDref2a0Hp2eE4aw&usqp=CAU')",
       },

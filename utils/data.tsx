@@ -143,3 +143,44 @@ export const dataIconAuthProviders  :Array<dataIconAuthProviders> = [
     icon : <FcGoogle/>,
   }
 ]
+
+interface dataCategoriesProfile {
+  name : string;
+}
+export const dataCategoriesProfile : Array<dataCategoriesProfile> = [
+  {
+    name : "Videos"
+  },{
+    name : "Liked"
+  }
+]
+
+interface dataVideosProfile{
+  video : string;
+  caption:string;
+  likes : number;
+} 
+
+export const dataVideosProfile :Array<dataVideosProfile> = [
+  ...Array(5)
+].map((_,i)=>({
+  video : `videos/video${i}.mp4`,
+  caption : ` laboriosam earum sequi illo nesciunt quibusdam, necessitatibus perferendis voluptatibus excepturi saepe dolores libero praesentium temporibus. Nulla aliquid odit recusandae ipsa quidem. ${i}`,
+  likes : i+1
+}))
+
+
+
+interface dataLikedProfile{
+  video : string;
+  caption:string;
+  likes : number;
+} 
+
+export const dataLikedProfile :Array<dataLikedProfile> = [
+  ...Array(5)
+].map((_,i)=>({
+  video : `videos/video${5-i}.mp4`,
+  caption : ` laboriosam earum sequi illo nesciunt quibusdam, necessitatibus perferendis voluptatibus excepturi saepe dolores libero praesentium temporibus. Nulla aliquid odit recusandae ipsa quidem. ${i}`,
+  likes : i+1
+}))

@@ -52,7 +52,7 @@ const UserInfo : React.FC<Props> = ({image,username,name, type, caption, comment
   }
 
   return (
-    <section className={`${type&&"space-x-10"} flex space-x-2`}>
+    <section className={`${type=="profile"&&"space-x-10"} flex space-x-2`}>
       <img src={image} className={`${size} rounded-full`} />
       <div className=''>
         <h1 className={`flex ${h1} items-center gap-1 font-bold ${type=="comment"&&"font-semibold text-[0.92rem]"}`}>

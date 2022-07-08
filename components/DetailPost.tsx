@@ -7,6 +7,7 @@ import {dataDetail} from "../utils/data"
 import {handleModalDetail} from "../redux/actions/postActions"
 import UserInfo from './UserInfo';
 import AddComment from './AddComment';
+
 interface Props {
   setModalDetail : Dispatch<SetStateAction<boolean>>;
   modalDetail : boolean;
@@ -28,7 +29,7 @@ const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail}) => {
           <BsArrowLeft className='text-[1.5rem] cursor-pointer'  onClick={()=>handleCloseModal()} />
         </section>
 
-        <section className='bg-black group sticky top-10 flex justify-center items-center sm:rounded-l-md '>
+        <section className={`bg-detail-video group sticky top-10 flex justify-center items-center sm:rounded-l-md `}>
           <Video url={dataDetail.video} type="detail" customeStyle={{video:"lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"}}/>
         </section>
 

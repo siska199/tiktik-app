@@ -47,10 +47,10 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
               {
                 providers&&Object.values(providers).map((provider,i)=>(
                   <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
-                      {dataIconAuthProviders[i].icon}
                     <span className="hidden md:block ">
-                      {provider.name}
+                      Sign In With
                     </span>
+                      {dataIconAuthProviders[i].icon}
                   </button>
                 ))
               }
