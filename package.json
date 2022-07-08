@@ -11,16 +11,15 @@
   "dependencies": {
     "@sanity/client": "^3.3.2",
     "axios": "^0.27.2",
-    "jwt-decode": "^3.1.2",
     "lottie-react": "^2.3.1",
     "next": "12.2.0",
+    "next-auth": "^4.9.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
-    "uuidv4": "^6.2.13"
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "18.0.0",

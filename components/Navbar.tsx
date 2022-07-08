@@ -29,7 +29,7 @@ const Navbar : React.FC<NavbarProps> = ({type}) => {
           <AiOutlinePlus/>
           <span className="hidden md:block ">Upload</span>
         </button> 
-        <img className="w-10 rounded-full" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
+        <img onClick={()=>router.push("/profile")} className="w-10 rounded-full cursor-pointer" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
         <button className="border-[0.005rem] p-2 flex shadow-lg rounded-full">
             <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
         </button>

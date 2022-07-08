@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/data.js", "redux/store.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/data.js", "redux/store.js", "pages/_middleware.js", "pages/_middleware.js", "pages/auth/[...nextauth].js"],
   "exclude": ["node_modules"]
 }

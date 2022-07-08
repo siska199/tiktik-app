@@ -121,3 +121,15 @@ export const dataCategory : string[]= [
   "Animals",
   "Sports"
 ]
+
+interface dataUser {
+  image: string;
+  name: string;
+  username:string;
+}
+
+export const dataUser : dataUser = {
+  image:`peoples/image5.jpg`,
+  name:`Siska Apriana Rifianti _0`,
+  username:`siska_199_0`,
+}

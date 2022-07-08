@@ -58,7 +58,7 @@ const uploadVideo : React.FC = () => {
 
   return (
     <LayoutPage type="uploadVideo">
-      <div  className='flex-1 flex-col flex-grow md:py-5 bg-gray-100 flex justify-center items-center w-full h-full'>
+      <div className='flex-1 flex-col flex-grow md:py-5 bg-gray-100 flex justify-center items-center w-full h-full '>
           <div className='m-auto w-full flex flex-col md:w-[50rem] h-[35rem] bg-white rounded-lg p-10 md:overflow-hidden'>
             <header className='mb-5'>
               <h1 className='font-bold text-[1.3rem]'>Upload Video</h1>
