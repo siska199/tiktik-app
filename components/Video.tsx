@@ -60,7 +60,7 @@ const Video : React.FC<Props> = ({url,  type, customeStyle}) => {
         controls={type =="post" || type=="profile"?false:true}
       />
       {
-        type=="post" || type=="profile" && (
+        (type=="post" || type=="profile") && (
         <div className={`${type=="profile"&&"absolute bottom-0 left-0 text-white border-none"} flex gap-3 p-2 text-[1.2rem]`}>
           {
             play?(
