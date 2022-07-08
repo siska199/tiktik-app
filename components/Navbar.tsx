@@ -1,20 +1,25 @@
 import React from "react"
-import Image from "next/image"
+import {signIn, signOut} from "next-auth/react"
+import {useSession} from "next-auth/react"
+import { useRouter } from "next/router"
 import Link from "next/link"
+import Search from "./Search"
 import {AiOutlineLogout,AiOutlinePlus} from "react-icons/ai"
 import {FiSearch} from "react-icons/fi"
-import Search from "./Search"
-import { useRouter } from "next/router"
-
+import {dataIconAuthProviders} from "../utils/data"
 interface NavbarProps {
   type? : string;
+  providers? : object;
 }
 
-const Navbar : React.FC<NavbarProps> = ({type}) => {
+const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
   const router = useRouter()
+  const {data:session} = useSession()
   const handleUploadOnClick = ()=>{
     router.push("/upload-video")
   }
+
+  
   return (
     <nav className={`${type=="uploadVideo"&&"!max-w-[1100px] mx-auto"} sticky top-0 bg-white border-b-[0.05rem] flex justify-between items-center px-2 md:px-0 py-2 space-x-2 z-30`}>
       <Link href="/" >
@@ -28,11 +33,30 @@ const Navbar : React.FC<NavbarProps> = ({type}) => {
         <button onClick={()=>handleUploadOnClick()}  className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
           <AiOutlinePlus/>
           <span className="hidden md:block ">Upload</span>
-        </button> 
-        <img onClick={()=>router.push("/profile")} className="w-10 rounded-full cursor-pointer" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
-        <button className="border-[0.005rem] p-2 flex shadow-lg rounded-full">
-            <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
         </button>
+        {
+          session?(
+            <>
+              <img onClick={()=>router.push("/profile")} className="w-10 rounded-full cursor-pointer" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
+              <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex shadow-lg rounded-full">
+                <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
+              </button>
+            </>
+          ):(
+            <>
+              {
+                providers&&Object.values(providers).map((provider,i)=>(
+                  <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
+                      {dataIconAuthProviders[i].icon}
+                    <span className="hidden md:block ">
+                      {provider.name}
+                    </span>
+                  </button>
+                ))
+              }
+            </>
+          )
+        }
       </section>
     </nav>
   )
