@@ -23,7 +23,7 @@ const profile = () => {
               <ul className='flex gap-8 border-b-[0.005rem] font-semibold'>
                 {
                   dataCategoriesProfile.map((data,i)=>(
-                    <li onClick={()=>setActive(data.name)} className={`${active==data.name&&"border-main border-b-2 text-gray-400"} cursor-pointer` }>{data.name}</li>
+                    <li key={i} onClick={()=>setActive(data.name)} className={`${active==data.name&&"border-main border-b-2 text-gray-400 transition duration-[50] ease-linear"} cursor-pointer` }>{data.name}</li>
                   ))
                 }
               </ul>

@@ -1,5 +1,5 @@
 import React, {useRef, useState, } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
 import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
@@ -7,10 +7,10 @@ import {handleModalDetail} from "../redux/actions/postActions"
 import DetailPost from "./DetailPost"
 
 interface Props {
-  url : string;
+  url : string  | undefined; 
   type? : string;
   customeStyle ? : {
-    video? : string;
+    video? : string 
   }
 }
 

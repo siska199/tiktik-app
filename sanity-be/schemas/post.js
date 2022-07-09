@@ -4,27 +4,23 @@ export default {
   type: "document",
   fields: [
     {
+      name: "video",
+      title: "Video",
+      type: "file",
+      options: {
+        accept: "video/mp4, video/webm, video/ogg",
+      },
+    },
+    {
       name: "caption",
       title: "Caption",
       type: "string",
     },
     {
-      name: "video",
-      title: "Video",
-      type: "file",
-      option: {
-        hotspot: true,
-      },
-    },
-    {
-      name: "userId",
-      title: " UserId",
-      type: "string",
-    },
-    {
-      name: "postedBy",
-      title: "PostedBy",
-      type: "postedBy",
+      name: "postBy",
+      title: "PostBy",
+      type: "reference",
+      to: { type: "user" },
     },
     {
       name: "likes",
@@ -33,7 +29,7 @@ export default {
       of: [
         {
           type: "reference",
-          to: [{ type: "user" }],
+          to: { type: "user" },
         },
       ],
     },
@@ -41,12 +37,25 @@ export default {
       name: "comments",
       title: "Comments",
       type: "array",
-      of: [{ type: "comment" }],
-    },
-    {
-        name :"topic",
-        title:"Topic",
-        type :"string"
+      of: [
+        {
+          type: "object",
+          name: "comment",
+          fields: [
+            {
+              name: "field",
+              title: "Field",
+              type: "string",
+            },
+            {
+              name: "postBy",
+              tittle: "PostBy",
+              type: "reference",
+              to :{type:"user"}
+            },
+          ],
+        },
+      ],
     },
   ],
 };
