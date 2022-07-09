@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Topic : React.FC <Props> = ({title,icon, number,active}) => {
-  console.log("key: ", number)
   return (
     <Link href={`/?topic=${title.toLocaleLowerCase()}`} >
       <div className={`${active&&"text-main md:w-auto md:h-auto  md:bg-slate-200"} text-[1.2rem] border-0 md:border-[0.005rem] flex md:px-2 md:py-1 md:space-x-2 font-bold items-center justify-center rounded-full cursor-pointer`}>

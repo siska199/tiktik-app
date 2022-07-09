@@ -25,8 +25,8 @@
  kosong
 
 *[_type=="post" && category->name==$category]{
- "createdAt":_createdAt,
-  "id":_id,
+  _createdAt,
+  _id,
   "category": category->name  ,
   "likes": likes[]->username,
   "countLikes":count(likes),
@@ -39,5 +39,52 @@
    "video":video.asset->url,
    "like":$username in likes[]->username
 } | order(createdAt)
+
+
+3. Fetch specified data by id:
+>>Catatan:
+-Wajib mengirim parameter 'username' dan 'id', if havent loggin param yang dikirim
+ kosong
+
+*[_type=="post"&&_id==$id]{
+  _createdAt,
+  _id,
+  "category": category->name  ,
+  "likes": likes[]->username,
+  "countLikes":count(likes),
+  "comments": comments[]{
+       "field" : field,
+        "postBy":postBy->{image,name,username},
+        "createdAt":postBy->_createdAt
+   },
+   "video":video.asset->url,
+   "like": $username in likes[]->username
+}[0]
+
+4. POST DATA:
+https://<project-id>.api.sanity.io/v2021-06-07/data/mutate/<dataset-name>
+
+const document = {
+   _type :"post",
+   captio: caption,
+   video :{
+	_type :"file",
+	asset:{
+	   _type : "reference",
+           _ref : videoAsset?._id
+	}
+   },
+   ...
+}
+
+const data = await client.create(document)
+
+5. Upload image and get id:
+
+
+const data = await client.assets.upload('file',selectedFile,{
+	contentType: selectedFile.type,
+        filename: selectedFile.name
+})
 
 

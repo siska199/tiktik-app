@@ -11,9 +11,11 @@ import AddComment from './AddComment';
 interface Props {
   setModalDetail : Dispatch<SetStateAction<boolean>>;
   modalDetail : boolean;
+  _idPost : string;
 }
 
-const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail}) => {
+const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail, _idPost}) => {
+  console.log("get ID posts: ", _idPost)
   const dispatch = useDispatch()
 
   const handleCloseModal = ()=>{

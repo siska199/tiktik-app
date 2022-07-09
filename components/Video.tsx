@@ -8,6 +8,7 @@ import DetailPost from "./DetailPost"
 
 interface Props {
   url : string  | undefined; 
+  _idPost?:string;
   type? : string;
   customeStyle ? : {
     video? : string 
@@ -20,7 +21,7 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url,  type, customeStyle}) => {
+const Video : React.FC<Props> = ({url, _idPost, type, customeStyle}) => {
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
@@ -81,7 +82,7 @@ const Video : React.FC<Props> = ({url,  type, customeStyle}) => {
         )
       }
       {
-        modalDetail&&<DetailPost modalDetail={modalDetail}  setModalDetail={setModalDetail}/>
+        modalDetail&&<DetailPost _idPost={_idPost?_idPost:""} modalDetail={modalDetail} setModalDetail={setModalDetail}/>
       }
     </section>
   )

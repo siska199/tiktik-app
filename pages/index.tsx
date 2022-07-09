@@ -4,19 +4,33 @@ import {getProviders} from "next-auth/react"
 import LayoutPage from '../layouts/LayoutPage'
 import Post from "../components/Post"
 import { dataPosts } from '../utils/data'
+import { GiConsoleController } from 'react-icons/gi'
 
 interface PropsIndex{
   providers : object;
+  posts : {
+    postBy: {
+      image : string;
+      username:string;
+      name:string;
+    },
+    caption:string;
+    video:{
+      url:string;
+      _id:string;
+    },
+    _id : string;
+  }[];
 }
 
-const Home: NextPage<PropsIndex> = ({providers}) => {
-  console.log("providers homepage: ", providers)
+const Home: NextPage<PropsIndex> = ({providers, posts}) => {
+  console.log("posts : ", posts)
   return (
     <LayoutPage type="homepage" providers={providers}>
       <div className='flex-[0.7] flex-col flex-grow py-5'>
         {
-          dataPosts.map((data,i)=>(
-            <Post key={i} image={data.image} name={data.name} username={data.username} caption={data.caption} video={data.video}/>
+          posts?.map((data,i)=>(
+            <Post _idPost={data._id} key={i} image={data.postBy.image} name={data.postBy.name} username={data.postBy.username} caption={data.caption} video={data.video}/>
           ))
         }
       </div>
@@ -26,13 +40,19 @@ const Home: NextPage<PropsIndex> = ({providers}) => {
 
 export default Home
 
-export const getServerSideProps = async()=>{
+export const getServerSideProps = async(context:any)=>{
   try {
+    const {topic} = context.query
+    console.log("topic: ", topic)
     const providers = await getProviders()
-    console.log("providers: ",providers)
+    const url = topic ?`${process.env.NEXTAUTH_URL}/api/post?topic=${topic}`:`${process.env.NEXTAUTH_URL}/api/post`
+    const posts = await fetch(url).then(res=>res.json())
+
+    console.log("post by: ", posts)
     return{
       props :{
-        providers
+        providers,
+        posts
       }
     }
   } catch (error) {
