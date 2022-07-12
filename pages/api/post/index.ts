@@ -17,9 +17,20 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
 
     if(method=="POST"){
         try {
-            
+            const {body}=req
+            console.log("body: ", body)
+            res.status(201).send('Create Post Success')
         } catch (error) {
             res.status(500).send(`${error}`)
         }
     }
 } 
+
+export const config = {
+    api: {
+      bodyParser: {
+        bodyParser: false, 
+        sizeLimit: '100mb' 
+      },
+    },
+  }

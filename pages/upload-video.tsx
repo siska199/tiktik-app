@@ -7,6 +7,7 @@ import Dropdown from '../components/Dropdown'
 import {BsFillCloudUploadFill} from "react-icons/bs"
 import {AiOutlineClose} from "react-icons/ai"
 import {handleGetCategories} from "../redux/actions/categoryAction"
+import { handleAddPost } from '../redux/actions/postActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface PropsUploadVideo{
@@ -78,6 +79,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
     try {
       e.preventDefault()
       console.log("form that we will send: ", form)
+      dispatch(handleAddPost(form))
     } catch (error) {
       throw error
     }
@@ -143,11 +145,4 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
 }
 
 export default uploadVideo
-
-export const getServerSideProps = async(contex:any)=>{
-  try {
-  } catch (error) {
-    throw error
-  }
-}
 
