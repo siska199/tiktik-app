@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {AiFillHome} from "react-icons/ai"
 import { useRouter } from "next/router"
 import TitleSectionSideNavbar from "./TitleSectionSideNavbar"
@@ -12,10 +13,12 @@ const Sidebar = () => {
 
   return (
     <section className="sticky top-[3.5rem] flex flex-col flex-[0.1] md:flex-[0.3] max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
-      <div className="hidden md:flex md:p-5 md:border-b-[0.05rem] text-main space-x-3 items-center justify-center md:justify-start">
-        <AiFillHome className="text-[1.2rem]"/>
-        <h1 className="hidden md:block font-medium">For You</h1>
-      </div>
+        <Link href="/?topic=all">
+          <div className="hidden md:flex md:p-5 md:border-b-[0.05rem] text-main space-x-3 items-center justify-center md:justify-start cursor-pointer">
+            <AiFillHome className="text-[1.2rem]"/>
+            <h1 className="hidden md:block font-medium">For You</h1>
+          </div>
+        </Link>
 
       <div className="md:p-3 border-b-[0.05rem]">
         <TitleSectionSideNavbar title="Popular Topics"/>

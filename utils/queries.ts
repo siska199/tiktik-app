@@ -2,6 +2,7 @@ export const queryPosts = `
     *[_type=="post"]{
       _id,
       _createdAt,
+      caption,
       "category": category->name  ,
       "likes": likes[]->username,
       "countLikes":count(likes),
@@ -23,6 +24,7 @@ export const queryPostsByCaption = `
     *[_type=="post" && category->name==$topic]{
       _createdAt,
       _id,
+      caption,
       "category": category->name  ,
       "likes": likes[]->username,
       "countLikes":count(likes),
@@ -45,6 +47,7 @@ export const queryPostById = `
     *[_type=="post"&&_id==$id]{
       _createdAt,
       _id,
+      caption,
       "category": category->name  ,
       "likes": likes[]->username,
       "countLikes":count(likes),
@@ -62,3 +65,9 @@ export const queryPostById = `
     }[0]
 `
 
+export const queryCategories = `
+    *[_type=="category"]{
+      _id,
+      name
+    }
+`

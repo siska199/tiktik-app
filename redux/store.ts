@@ -18,4 +18,5 @@ if(typeof window !=="undefined"){
 
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 
+
 export default store

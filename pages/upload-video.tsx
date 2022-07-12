@@ -1,13 +1,28 @@
-import React, { useState, useRef } from 'react'
+import type { NextPage } from 'next'
+import React, { useState, useRef, useEffect } from 'react'
 import LayoutPage from '../layouts/LayoutPage'
 import Video from '../components/Video'
 import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
-import { dataCategory } from '../utils/data'
 import {BsFillCloudUploadFill} from "react-icons/bs"
 import {AiOutlineClose} from "react-icons/ai"
+import {handleGetCategories} from "../redux/actions/categoryAction"
+import { useDispatch, useSelector } from 'react-redux'
 
-const uploadVideo : React.FC = () => {
+interface PropsUploadVideo{
+  categories? : {
+    _id:string;
+    name:string;
+  }[]
+}
+
+const uploadVideo : NextPage<PropsUploadVideo> = () => {
+  const dispatch = useDispatch()
+  const categories = useSelector(state=>state.category.categories)
+  useEffect(()=>{
+    dispatch(handleGetCategories())
+  },[])
+  
   const initialForm = {
     video : null,
     caption : "",
@@ -27,9 +42,23 @@ const uploadVideo : React.FC = () => {
       video : initialForm.video
     })
   }
-  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement>)=>{
+  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
     const name = e.target.name.toLowerCase()
-    const data : File | string  = name=="video"?(e.target.files as FileList)[0]:e.target.value
+    let data : File | string|object = ""
+    switch(name){
+      case "video":
+        data = (e.target.files as FileList)[0]
+        break;
+      case "category":
+        data = {
+          name : data,
+          _id :  e.target.options[e.target.selectedIndex].dataset.id
+        }
+        break;
+      default:
+        data = e.target.value
+        break;
+    }
     setForm({
       ...form,
       [name] : data,
@@ -44,6 +73,7 @@ const uploadVideo : React.FC = () => {
       }
     }
   }
+
   const handleOnSubmit = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
       e.preventDefault()
@@ -52,6 +82,7 @@ const uploadVideo : React.FC = () => {
       throw error
     }
   }
+
   const handleOnDiscard = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault()
     setForm(initialForm)
@@ -96,7 +127,7 @@ const uploadVideo : React.FC = () => {
               <section className='flex-grow '>
                 <form action="" autoComplete='off' className='flex flex-col gap-5 py-5 md:py-10 md:px-10'>
                   <Input handleOnChange={handleOnChange} type="text" label="Caption"/>
-                  <Dropdown  handleOnChange={handleOnChange}  label={"Category"} dataCategory={dataCategory}/>
+                  <Dropdown  handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
                   <div className='flex gap-5 font-semimedium rounded-sm'>
                     <button onClick={(e)=>handleOnDiscard(e)} className='w-[8rem] py-1 rounded-[0.3rem] border-[0.005rem]'>Discard</button>
                     <button onClick={(e)=>handleOnSubmit(e)} className='w-[8rem] py-1 bg-main rounded-[0.3rem] text-white'>Post</button>
@@ -112,3 +143,11 @@ const uploadVideo : React.FC = () => {
 }
 
 export default uploadVideo
+
+export const getServerSideProps = async(contex:any)=>{
+  try {
+  } catch (error) {
+    throw error
+  }
+}
+

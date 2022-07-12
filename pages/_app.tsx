@@ -3,9 +3,11 @@ import type { AppProps } from 'next/app'
 import {SessionProvider} from "next-auth/react"
 import { Provider } from 'react-redux'
 import store from '../redux/store'
+
 import { useState } from 'react'
 import Router from 'next/router'
 import LoadingPage from '../components/LoadingPage'
+
 
 function MyApp({ Component, pageProps : {session, ...pageProps} }: AppProps) : JSX.Element {
   const [loading, setLoading] = useState(false)

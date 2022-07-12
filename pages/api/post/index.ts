@@ -4,14 +4,12 @@ import { queryPosts, queryPostsByCaption } from "../../../utils/queries";
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const {query:{topic},method} = req
-    console.log("topic: ", topic)
-    console.log("method: ", method)
     if(method=="GET"){
         try {
             const query = topic ? queryPostsByCaption : queryPosts
             const params = {username:"",topic: topic?topic:""}
-            const posts = await client.fetch(query, params)
-            res.status(200).json(posts)
+            const dataPosts = await client.fetch(query, params)
+            res.status(200).json(dataPosts)
         } catch (error) {
             res.status(500).send(`${error}`)
         }
