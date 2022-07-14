@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import client from "../../utils/sanity"
+import client from "../../utils/sanityClient/sanity"
 
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse){

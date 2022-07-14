@@ -1,5 +1,5 @@
-import { HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST } from "../actions-type/postTypeAction"
-import client from "../../utils/sanity"
+import { HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST,HANDLE_GET_POST } from "../actions-type/postTypeAction"
+import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
     return({
@@ -28,7 +28,7 @@ export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
             })
         })
         
-        return({
+        return dispatch({
             type: HANDLE_ADD_POST,
             payload : resAddPost
         })
@@ -36,4 +36,18 @@ export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
         throw error
     }
 
+}
+
+export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>{
+    try {
+        console.log("id: ", id)
+        const post = await fetch(`api/post/${id}`).then(res=>res.json())
+        console.log("data post get in action: ", post)
+        return dispatch({
+            type : HANDLE_GET_POST,
+            payload : post
+        })
+    } catch (error) {
+        throw error
+    }
 }

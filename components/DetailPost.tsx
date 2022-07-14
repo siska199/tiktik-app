@@ -1,10 +1,10 @@
-import React, {Dispatch, SetStateAction} from 'react'
+import React, {Dispatch, SetStateAction, useEffect} from 'react'
 import {BsArrowLeft, BsFillSuitHeartFill} from "react-icons/bs"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {AiOutlineClose} from "react-icons/ai"
 import Video from './Video';
 import {dataDetail} from "../utils/data"
-import {handleModalDetail} from "../redux/actions/postActions"
+import {handleModalDetail, handleGetPost} from "../redux/actions/postActions"
 import UserInfo from './UserInfo';
 import AddComment from './AddComment';
 
@@ -17,6 +17,13 @@ interface Props {
 const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail, _idPost}) => {
   console.log("get ID posts: ", _idPost)
   const dispatch = useDispatch()
+  const post = useSelector(state=> state.post.post)
+  console.log("post in detail post: ", post)
+  
+  useEffect(()=>{
+    console.log("run")
+    dispatch(handleGetPost(_idPost))
+  },[])
 
   const handleCloseModal = ()=>{
     setModalDetail(!modalDetail)

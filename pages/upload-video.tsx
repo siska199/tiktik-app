@@ -10,7 +10,7 @@ import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
 import { useDispatch, useSelector } from 'react-redux'
 
-import client from "../utils/sanity"
+import client from "../utils/sanityClient/sanity"
 
 interface PropsUploadVideo{
   categories? : {

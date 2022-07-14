@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import client from "../../../utils/sanity";
-import { queryPosts, queryPostsByCaption } from "../../../utils/queries";
+import client from "../../../utils/sanityClient/sanity";
+import { queryPosts, queryPostsByCaption } from "../../../utils/sanityClient/queries";
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const {query:{topic},method} = req
