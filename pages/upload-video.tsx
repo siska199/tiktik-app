@@ -10,6 +10,8 @@ import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
 import { useDispatch, useSelector } from 'react-redux'
 
+import client from "../utils/sanity"
+
 interface PropsUploadVideo{
   categories? : {
     _id:string;
@@ -52,7 +54,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
         break;
       case "category":
         data = {
-          name : data,
+          name,
           _id :  e.target.options[e.target.selectedIndex].dataset.id
         }
         break;
@@ -75,11 +77,13 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
     }
   }
 
-  const handleOnSubmit = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+  const handleOnSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
       e.preventDefault()
-      console.log("form that we will send: ", form)
       dispatch(handleAddPost(form))
+      // .then(()=>{
+      //   setForm(initialForm)
+      // })
     } catch (error) {
       throw error
     }

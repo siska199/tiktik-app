@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url, _idPost, type, customeStyle}) => {
+const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) => {
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
