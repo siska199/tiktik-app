@@ -9,13 +9,11 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
 }
 
 export const handleAddPost =(data)=>async(dispatch, getState)=>{
-    console.log("form: ", data)
     const videoUploadInfo = await client.assets.upload('file', data.video,{
         contentType : data.video.type,
         filename: data.video.name
     })
-    console.log("upload video: ", videoUploadInfo)
-    const res = await fetch('api/post',{
+    const resAddPost = await fetch('api/post',{
         method:"POST",
         headers:{
             'Content-Type': 'application/json'
@@ -27,8 +25,7 @@ export const handleAddPost =(data)=>async(dispatch, getState)=>{
             }
         })
     })
-
-    console.log("res add post: ", res)
+    console.log('response add post: ', resAddPost)
     return({
         type: HANDLE_ADD_POST,
         payload : ""

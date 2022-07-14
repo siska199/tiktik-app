@@ -18,7 +18,6 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     if(method=="POST"){
         try {
             const {body} = req
-            console.log("body: ", body)
             const doc = {
                 _type :"post",
                 caption : body.caption,
@@ -38,8 +37,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
                     }
                 }
             }
-            const responsePost = await client.create(doc)
-            console.log("responsePost: ", responsePost)
+            await client.create(doc)
             res.status(201).send('Create Post Success')
         } catch (error) {
             res.status(500).send(`${error}`)

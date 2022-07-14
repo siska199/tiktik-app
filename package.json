@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@sanity/client": "^3.3.2",
-    "axios": "^0.27.2",
     "lottie-react": "^2.3.1",
     "next": "12.2.0",
     "next-auth": "^4.9.0",

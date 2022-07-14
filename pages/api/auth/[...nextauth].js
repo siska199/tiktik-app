@@ -16,7 +16,16 @@ export default NextAuth({
   session: {
     strategy: "jwt",
   },
-  callbacks: {},
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      await fetch("http://localhost:3000/api/signIn", {
+        method:"POST",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user),
+      });
+      return true;
+    },
+  },
 });
-
-

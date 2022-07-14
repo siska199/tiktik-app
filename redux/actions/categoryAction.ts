@@ -1,4 +1,3 @@
-import axios from "axios"
 import { GET_CATEGORIES } from "../actions-type/categoryActions"
 
 export const handleGetCategories = ()=>async(dispatch:any)=>{
