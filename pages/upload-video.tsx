@@ -11,6 +11,7 @@ import { handleAddPost } from '../redux/actions/postActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 import client from "../utils/sanityClient/sanity"
+import { handleFormValidationPost } from '../utils/function/formValidation'
 
 interface PropsUploadVideo{
   categories? : {
@@ -79,11 +80,15 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
 
   const handleOnSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
-      console.log("form: ", form)
       e.preventDefault()
+      console.log("form: ", form)
+      const msgValidateForm = handleFormValidationPost(form)
+      if(msgValidateForm) return console.log("message: ", msgValidateForm)
+      
       dispatch(handleAddPost(form))
       .then(()=>{
         setForm(initialForm)
+        setVideoUrl(null)
       })
     } catch (error) {
       throw error

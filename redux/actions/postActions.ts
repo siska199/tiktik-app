@@ -10,7 +10,7 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
 
 export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
     try {
-        data.video && await client.assets.upload('file', data.video,{
+        await client.assets.upload('file', data.video,{
                 contentType : data.video.type,
                 filename: data.video.name
         })   
