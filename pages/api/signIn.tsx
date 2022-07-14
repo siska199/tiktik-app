@@ -8,7 +8,6 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
     if(method=="POST"){
         try {
             const {body} = req
-
             const doc = {
                 _type : "user",
                 _id : body.name.toLowerCase().split(' ').slice(0,2).join(''),

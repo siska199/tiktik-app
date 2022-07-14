@@ -79,11 +79,12 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
 
   const handleOnSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
+      console.log("form: ", form)
       e.preventDefault()
       dispatch(handleAddPost(form))
-      // .then(()=>{
-      //   setForm(initialForm)
-      // })
+      .then(()=>{
+        setForm(initialForm)
+      })
     } catch (error) {
       throw error
     }
@@ -92,6 +93,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const handleOnDiscard = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault()
     setForm(initialForm)
+    setVideoUrl(null)
   }
 
   return (
@@ -132,8 +134,8 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
               
               <section className='flex-grow '>
                 <form action="" autoComplete='off' className='flex flex-col gap-5 py-5 md:py-10 md:px-10'>
-                  <Input handleOnChange={handleOnChange} type="text" label="Caption"/>
-                  <Dropdown  handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
+                  <Input value={form.caption} handleOnChange={handleOnChange} type="text" label="Caption"/>
+                  <Dropdown value={form.category} handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
                   <div className='flex gap-5 font-semimedium rounded-sm'>
                     <button onClick={(e)=>handleOnDiscard(e)} className='w-[8rem] py-1 rounded-[0.3rem] border-[0.005rem]'>Discard</button>
                     <button onClick={(e)=>handleOnSubmit(e)} className='w-[8rem] py-1 bg-main rounded-[0.3rem] text-white'>Post</button>
