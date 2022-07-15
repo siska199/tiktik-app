@@ -26,7 +26,11 @@ const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail, _idPost}) =>
     setModalDetail(!modalDetail)
     dispatch(handleModalDetail(!modalDetail))
   }
-
+  const handleLove = ()=>{
+    const dataLove = {
+      love: post.like
+    }
+  }
   return (
     <>
       {
@@ -34,7 +38,7 @@ const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail, _idPost}) =>
           <article className={`fixed z-30 top-0 left-0 w-screen h-screen flex bg-black/50 sm:overflow-y-scroll`}>
             <AiOutlineClose onClick={()=>handleCloseModal()} className='hidden sm:block absolute right-5 top-5 text-white font-bold text-[1.4rem] cursor-pointer '/>
             <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>
-              <section className='w-full h-10  bg-white sm:hidden flex items-center px-3 py-2'>
+              <section className=' w-full h-10  bg-white sm:hidden flex items-center px-3 py-2'>
                 <BsArrowLeft className='text-[1.5rem] cursor-pointer'  onClick={()=>handleCloseModal()} />
               </section>
   
@@ -47,7 +51,7 @@ const DetailPost : React.FC<Props> = ({setModalDetail, modalDetail, _idPost}) =>
                     <UserInfo image={post.postBy.image} username={post.postBy.username} name={post.postBy.name} type={"detail"} />
                     <p className='text-sm leading-[1.2rem] font-thin sm:max-h-[20vh] sm:overflow-y-scroll'>{post.caption}</p>
                     <div className=''>
-                      <div className='w-10 h-10 flex rounded-full bg-slate-200 cursor-pointer'>
+                      <div onClick={()=>handleLove()} className='w-10 h-10 flex rounded-full bg-slate-200 cursor-pointer'>
                         <BsFillSuitHeartFill className={`m-auto ${post.like?"text-main":"text-gray-400"}`}/>
                       </div>
                       <p className='font-semibold text-sm w-10 flex justify-center'>{post.countLikes}</p>

@@ -49,7 +49,7 @@ export const queryPostById = `
       _id,
       caption,
       "category": category->name  ,
-      "likes": likes[]->username,
+      "likes":likes[]->username,
       "countLikes":count(likes),
       "comments": comments[]{
           "field" : field,
