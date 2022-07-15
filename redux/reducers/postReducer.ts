@@ -1,4 +1,4 @@
-import { HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST  } from "../actions-type/postTypeAction"
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST } from './../actions-type/postTypeAction';
 
 const initialState = {
     modalDetail : false,
@@ -13,8 +13,9 @@ export const postReducer = (state=initialState, action:any)=>{
         case HANDLE_ADD_POST:
          return {...state}
         case HANDLE_GET_POST:
-            console.log("get post in reducer: ", action.payload)
             return{...state, post:action.payload}
+        case HANDLE_ADD_COMMENT:
+            return{...state}
         default:
             return{...state}
     }

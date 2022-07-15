@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { handleAddComment } from '../redux/actions/postActions'
 
 
-const AddComment : React.FC = () => {
+const AddComment : React.FC = ({setRender, render}) => {
+  const dispatch = useDispatch()
   const [comment, setComment] = useState<string>("")
-
-  useEffect(()=>{
-    
+  const idPost = useSelector(state=>state.post.post._id)
+  
+  useEffect(()=>{   
   },[])
   
   const handleSubmitByPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) : void=>{
@@ -14,16 +17,22 @@ const AddComment : React.FC = () => {
       handleSubmit()
     }
   }
-
   const handleSubmit = (e? : React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
       e && e.preventDefault()
-      setComment("")
+      const data = {
+        idPost,
+        comment 
+      }
+      dispatch(handleAddComment(data)).then(()=>{
+        setComment("")
+        setRender(!render)
+      })
     } catch (error) {
         throw error      
     }
-    
   }
+
   return (
     <form autoComplete='off' className='w-full flex py-1 '>
         <input onKeyDown={(e)=>handleSubmitByPressEnter(e)} value={comment} onChange={(e)=>setComment(e.target.value)} placeholder='Add a comment...' className='placeholder:text-sm flex-grow outline-none '/>

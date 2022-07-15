@@ -1,16 +1,15 @@
 import type { NextPage } from 'next'
 import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {BsFillCloudUploadFill} from "react-icons/bs"
+import {AiOutlineClose} from "react-icons/ai"
 import LayoutPage from '../layouts/LayoutPage'
 import Video from '../components/Video'
 import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
-import {BsFillCloudUploadFill} from "react-icons/bs"
-import {AiOutlineClose} from "react-icons/ai"
+import Alert from '../components/Alert'
 import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
-import { useDispatch, useSelector } from 'react-redux'
-
-import client from "../utils/sanityClient/sanity"
 import { handleFormValidationPost } from '../utils/function/formValidation'
 
 interface PropsUploadVideo{
@@ -32,9 +31,15 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
     caption : "",
     category:""
   }
+  const initialAlert = {
+    show:false, 
+    type:"", 
+    message:""
+  }
   const [form, setForm] = useState(initialForm)
-  const inputVideoRef = useRef<HTMLInputElement | null>(null)
   const [videoUrl, setVideoUrl] = useState<string | undefined | null>("")
+  const [alert, setAlert] = useState(initialAlert)
+  const inputVideoRef = useRef<HTMLInputElement | null>(null)
 
   const handleOnSelectUpload = ()=>{
     inputVideoRef.current?.click()
@@ -77,13 +82,18 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
       }
     }
   }
-
   const handleOnSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
       e.preventDefault()
-      console.log("form: ", form)
       const msgValidateForm = handleFormValidationPost(form)
-      if(msgValidateForm) return console.log("message: ", msgValidateForm)
+      if(msgValidateForm){
+        setAlert({show:true, type:"error", message: msgValidateForm})
+        setTimeout(()=>{
+          setAlert(initialAlert)
+        },2500)
+        return ""
+      }
+      
       
       dispatch(handleAddPost(form))
       .then(()=>{
@@ -94,7 +104,6 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
       throw error
     }
   }
-
   const handleOnDiscard = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault()
     setForm(initialForm)
@@ -103,6 +112,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
 
   return (
     <LayoutPage type="uploadVideo">
+
       <div className='flex-1 flex-col flex-grow md:py-5 bg-gray-100 flex justify-center items-center w-full h-full '>
           <div className='m-auto w-full flex flex-col md:w-[50rem] h-[35rem] bg-white rounded-lg p-10 md:overflow-hidden'>
             <header className='mb-5'>
@@ -139,6 +149,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
               
               <section className='flex-grow '>
                 <form action="" autoComplete='off' className='flex flex-col gap-5 py-5 md:py-10 md:px-10'>
+                {alert.show && <Alert type={alert.type} message={alert.message}/>}
                   <Input value={form.caption} handleOnChange={handleOnChange} type="text" label="Caption"/>
                   <Dropdown value={form.category} handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
                   <div className='flex gap-5 font-semimedium rounded-sm'>

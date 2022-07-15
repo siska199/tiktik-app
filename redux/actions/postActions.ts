@@ -1,4 +1,4 @@
-import { HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST,HANDLE_GET_POST } from "../actions-type/postTypeAction"
+import { HANDLE_ADD_COMMENT,HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST,HANDLE_GET_POST } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
@@ -50,4 +50,19 @@ export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>
     } catch (error) {
         throw error
     }
+}
+
+export const handleAddComment: Function = (data)=>async(dispatch, getState)=>{
+    const resAddComment = await fetch(`api/post/${data.idPost}/comment`,{
+        method:"POST",
+        headers :{
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({comment:data.comment})
+    })
+    console.log("ress add comment: ", resAddComment)
+    return dispatch({
+        type : HANDLE_ADD_COMMENT,
+        payload : "",
+    })
 }
