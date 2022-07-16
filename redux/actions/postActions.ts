@@ -1,4 +1,4 @@
-import { HANDLE_ADD_COMMENT,HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST,HANDLE_GET_POST } from './../actions-type/postTypeAction';
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
@@ -40,9 +40,7 @@ export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
 
 export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>{
     try {
-        console.log("id: ", id)
         const post = await fetch(`api/post/${id}`).then(res=>res.json())
-        console.log("data post get in action: ", post)
         return dispatch({
             type : HANDLE_GET_POST,
             payload : post
@@ -53,16 +51,40 @@ export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>
 }
 
 export const handleAddComment: Function = (data)=>async(dispatch, getState)=>{
-    const resAddComment = await fetch(`api/post/${data.idPost}/comment`,{
-        method:"POST",
-        headers :{
-            'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify({comment:data.comment})
-    })
-    console.log("ress add comment: ", resAddComment)
-    return dispatch({
-        type : HANDLE_ADD_COMMENT,
-        payload : "",
-    })
+    try {    
+        const resAddComment = await fetch(`api/post/${data.idPost}/comment`,{
+            method:"POST",
+            headers :{
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify({comment:data.comment})
+        })
+        return dispatch({
+            type : HANDLE_ADD_COMMENT,
+            payload : resAddComment,
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+
+export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=>{
+    try {
+        const resLike = await fetch(`api/post/${data.idPost}/love`,{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body : JSON.stringify({
+                like : data.like
+            })
+        })
+        return dispatch({
+            type : HANDLE_ADD_REMOVE_LOVE,
+            payload : resLike
+        })
+    } catch (error) {
+        throw error
+    }
 }

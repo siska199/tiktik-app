@@ -13,8 +13,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
             const {_idPost} = req.query
             const {body} = req
             let resLike 
-            if(body.love){
-                resLike = await client.patch(_idPost).unset([`likes[_ref==${username}]`]).commit()
+            if(body.like != -1){
+                resLike = await client.patch(_idPost).unset([`likes[${body.like}]`]).commit()
             }else{
                 const doc = {
                     _ref : username,
@@ -25,7 +25,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
                 .append('likes',[doc])
                 .commit({autoGenerateArrayKeys:true})
             }
-            console.log("response like: ", resLike)
             res.status(200).send(resLike)
         } catch (error) {
             res.status(500).send(error)
