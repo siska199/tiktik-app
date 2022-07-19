@@ -11,9 +11,7 @@ interface Props {
   url : string  | undefined; 
   _idPost?:string;
   type? : string;
-  customeStyle ? : {
-    video? : string 
-  }
+  video? : string 
 }
 
 declare global {
@@ -22,12 +20,15 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) => {
+const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
+  const customeStyle = {
+    video
+  }
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
-  const [muted, setMuted] = useState<boolean>(true)
+  const [muted, setMuted] = useState<boolean>(false)
   
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
@@ -53,10 +54,11 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
 
   useEffect(()=>{
     const observerVideo = new IntersectionObserver(handleIntersect,optionsObserver)
-    
-    if(type=="post") observerVideo.observe(refVideo.current)
+    if(type=="post" && refVideo.current ){    
+      observerVideo.observe(refVideo.current)
+    }
     return ()=>{
-      (type=="post" && refVideo.current ) && observerVideo.disconnect(refVideo.current)
+      (type=="post" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
       setPlay(false)
     }
   },[])
@@ -64,7 +66,6 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
   const handleIntersect = (entries, observer)=>{
     type=="post" && entries.forEach((entry,i)=>{
       if(entry.isIntersecting){ 
-          refVideo?.current && setMuted(false)
           entry.target.play()
           setPlay(true)
         }else{
@@ -85,6 +86,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
         muted={muted}
         ref={refVideo} 
         src={url}
+        autoPlay={play}
         onEnded= {()=>setPlay(false)}
         onClick={()=>handleOnClick()}
         controls={type =="post" || type=="profile"?false:true}
