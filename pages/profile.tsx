@@ -31,7 +31,7 @@ const profile = () => {
                   {
                     videos.map((data,i)=>(
                       <div key={i}>
-                        <Video customeStyle={{video:"rounded-lg"}} url={data.video} type="profile"/>
+                        <Video video="rounded-lg" url={data.video} type="profile"/>
                       </div>
                     ))
                   }

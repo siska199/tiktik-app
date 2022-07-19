@@ -66,8 +66,9 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
   const handleIntersect = (entries, observer)=>{
     type=="post" && entries.forEach((entry,i)=>{
       if(entry.isIntersecting){ 
-          entry.target.play()
-          setPlay(true)
+        console.log(entry.target.autoPlay)
+          // entry.target.play()
+          // setPlay(true)
         }else{
           entry.target.pause()
           setPlay(false)
@@ -86,7 +87,6 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
         muted={muted}
         ref={refVideo} 
         src={url}
-        autoPlay={play}
         onEnded= {()=>setPlay(false)}
         onClick={()=>handleOnClick()}
         controls={type =="post" || type=="profile"?false:true}
