@@ -18,14 +18,25 @@ export default NextAuth({
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      await fetch("http://localhost:3000/api/signIn", {
-        method:"POST",
-        headers:{
-            'Content-Type': 'application/json'
+      await fetch(`${process.env.BASE_URL}/api/signIn`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
       });
       return true;
+    },
+    // async session({ session, user, token }) {
+    //   console.log("user info in session cb: ", user);
+    //   console.log("session: ", session);
+    //   session.user.id = user.id;
+    //   return session;
+    // },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      token.id = token.sub;
+      delete token.sub;
+      return token;
     },
   },
 });

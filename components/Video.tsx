@@ -1,11 +1,12 @@
-import React, {useRef, useState, } from 'react'
+import React, {useEffect, useState, useRef } from 'react'
+import { useRouter } from "next/router"
 import { useDispatch} from 'react-redux'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
 import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
 import {handleModalDetail} from "../redux/actions/postActions"
 import DetailPost from "./DetailPost"
-
+import Modal from "../layouts/Modal"
 interface Props {
   url : string  | undefined; 
   _idPost?:string;
@@ -26,7 +27,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
-  const [muted, setMuted] = useState<boolean>(false)
+  const [muted, setMuted] = useState<boolean>(true)
   
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
@@ -49,11 +50,39 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
         break;
     }
   }
+
+  useEffect(()=>{
+    const observerVideo = new IntersectionObserver(handleIntersect,optionsObserver)
+    
+    if(type=="post") observerVideo.observe(refVideo.current)
+    return ()=>{
+      (type=="post" && refVideo.current ) && observerVideo.disconnect(refVideo.current)
+      setPlay(false)
+    }
+  },[])
+
+  const handleIntersect = (entries, observer)=>{
+    type=="post" && entries.forEach((entry,i)=>{
+      if(entry.isIntersecting){ 
+          refVideo?.current && setMuted(false)
+          entry.target.play()
+          setPlay(true)
+        }else{
+          entry.target.pause()
+          setPlay(false)
+        }
+      })
+    
+  }
+
+  const optionsObserver = {
+    threshold : 1.0,
+  }
   return (
     <section className='relative'>
       <video 
         className={`cursor-pointer ${customeStyle?.video}`}
-        muted={muted} 
+        muted={muted}
         ref={refVideo} 
         src={url}
         onEnded= {()=>setPlay(false)}
@@ -62,7 +91,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
       />
       {
         (type=="post" || type=="profile") && (
-        <div className={`${type=="profile"&&"absolute bottom-0 left-0 text-white border-none"} flex gap-3 p-2 text-[1.2rem]`}>
+        <div className={`absolute bottom-0 left-0 text-white border-none flex gap-3 p-2 text-[1.2rem]`}>
           {
             play?(
               <AiOutlinePause className='cursor-pointer' onClick={()=>handlePausedUnpause()}/>
@@ -82,7 +111,10 @@ const Video : React.FC<Props> = ({url, _idPost, type, customeStyle={video:""}}) 
         )
       }
       {
-        modalDetail&&<DetailPost _idPost={_idPost?_idPost:""} modalDetail={modalDetail} setModalDetail={setModalDetail}/>
+        modalDetail &&
+        <Modal type="detail" modal={modalDetail} setModal={setModalDetail}>
+          <DetailPost _idPost={_idPost} />
+        </Modal>
       }
     </section>
   )

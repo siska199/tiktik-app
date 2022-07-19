@@ -1,8 +1,12 @@
+import {useSelector} from "react-redux"
 import type { NextPage } from 'next'
 import {getProviders} from "next-auth/react"
 import LayoutPage from '../layouts/LayoutPage'
 import Post from "../components/Post"
 import NotFound from '../components/NotFound'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { handleGetProviders } from '../redux/actions/authAction'
 
 interface PropsIndex{
   providers : object;
@@ -22,9 +26,15 @@ interface PropsIndex{
 }
 
 const Home: NextPage<PropsIndex> = ({providers, posts}) => {
+  const modalDetail = useSelector((state:any)=> state.post.modalDetail)
+
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(handleGetProviders(providers))
+  },[])
   return (
     <LayoutPage type="homepage" providers={providers}>
-      <div className='flex-[0.7] flex-col flex-grow py-5'>
+      <div className={`${modalDetail&&""} flex-[0.7] flex-col flex-grow py-5`}>
         {
           posts?.length>0 ?(
             <>            

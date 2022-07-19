@@ -9,7 +9,7 @@ import Footer from "./Footer"
 
 const Sidebar = () => {
   const router = useRouter()
-  const topic = router.query.topic
+  const {topic} = router.query
 
   return (
     <section className="sticky top-[3.5rem] flex flex-col flex-[0.1] md:flex-[0.3] max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
