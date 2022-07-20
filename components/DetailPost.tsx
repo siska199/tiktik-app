@@ -6,7 +6,7 @@ import {handleGetPost, handleAddRemoveLove} from "../redux/actions/postActions"
 import UserInfo from './UserInfo';
 import AddComment from './AddComment';
 import { useSession } from 'next-auth/react';
-import { handleModalAuth } from '../redux/actions/authAction';
+import NotFound from './NotFound';
 
 interface Props {
   _idPost : string | string[] | undefined;
@@ -23,10 +23,6 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
   },[render])
 
   const handleLove = ()=>{
-    if(!session){
-      dispatch(handleModalAuth())
-      return
-    }
 
     const dataLove = {
       idPost : _idPost,
@@ -42,7 +38,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
       {
         post.video && (
             <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>  
-              <section className={` group flex justify-center items-center sm:rounded-l-md `}>
+              <section className={`group flex justify-center items-center sm:rounded-l-md `}>
               <Video url={post.video.url} type="detail" video="lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"/>
               </section>
               
@@ -61,11 +57,13 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
                 <div className='h-full flex flex-col p-5'>
                   <div className='flex flex-col gap-3 sm:max-h-[30vh] overflow-y-scroll'>
                     {
-                      post.comments && post.comments.map((data,i)=>(
+                      post.comments ? post.comments.map((data,i)=>(
                         <div key={i}>
                           <UserInfo username={data.postBy.username} image={data.postBy.image} type="comment" comment={data.field} />
                         </div>
-                      ))
+                      )):(
+                        <NotFound type="comment"/>
+                      )
                     }
                   </div>
                   <div className='h-auto mt-auto '>

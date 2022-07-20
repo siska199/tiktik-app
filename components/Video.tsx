@@ -48,9 +48,9 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
           setModalDetail && setModalDetail(!modalDetail)
           dispatch(handleModalDetail(!modalDetail))
         }else{
-          dispatch(handleTooltipAuth())
+          dispatch(handleTooltipAuth(true))
           setTimeout(()=>{
-            dispatch(handleTooltipAuth())
+            dispatch(handleTooltipAuth(false))
           },5000)
         }
         break;
@@ -87,6 +87,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
   const optionsObserver = {
     threshold : 1.0,
   }
+  
   return (
     <section className='relative'>
       <video 

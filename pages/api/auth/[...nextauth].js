@@ -27,15 +27,9 @@ export default NextAuth({
       });
       return true;
     },
-    // async session({ session, user, token }) {
-    //   console.log("user info in session cb: ", user);
-    //   console.log("session: ", session);
-    //   session.user.id = user.id;
-    //   return session;
-    // },
     async jwt({ token, user, account, profile, isNewUser }) {
       token.id = token.sub;
-      delete token.sub;
+      console.log("token: ", token)
       return token;
     },
   },

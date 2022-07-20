@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Tooltip = ({message}) => {
+const Tooltip : React.FC<{message:string}> = ({message}) => {
   return (
     <div className="absolute mt-2 w-full flex-col items-center flex  group-hover:flex">
     <div className="w-3 h-3 -mt-2 rotate-45 bg-gray-500"></div>

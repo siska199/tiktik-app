@@ -1,9 +1,9 @@
 import { HANDLE_GET_PROVIDERS_DATA, HANDLE_TOOLTIP_AUTH } from './../actions-type/authAction';
 
-export const handleTooltipAuth = () => {
+export const handleTooltipAuth = (state) => {
     return({
         type:HANDLE_TOOLTIP_AUTH,
-        payload :""
+        payload :state
     })
 }
 

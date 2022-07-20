@@ -12,12 +12,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
             const {body} = req
             const doc = {
                 field :body.comment,
+                createdAt : Date.now(),
                 postBy :{
-                    _ref :token?.name?.toLowerCase().split(' ').slice(0,2).join(''),
+                    _ref :token?.id,
                     _type:"reference"
                 }
-            }            
-            const resComment = await client.patch(_idPost)
+            }   
+            await client.patch(_idPost)
                                 .setIfMissing({comments: []})
                                 .append('comments',[doc])
                                 .commit({autoGenerateArrayKeys:true})

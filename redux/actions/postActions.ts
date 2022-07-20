@@ -1,3 +1,4 @@
+import {Action, ActionCreator, Dispatch} from 'redux';
 import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
@@ -10,11 +11,10 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
 
 export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
     try {
-        await client.assets.upload('file', data.video,{
+        const videoUploadInfo = await client.assets.upload('file', data.video,{
                 contentType : data.video.type,
                 filename: data.video.name
         })   
-
         const resAddPost = await fetch('api/post',{
             method:"POST",
             headers:{

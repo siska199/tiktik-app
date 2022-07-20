@@ -6,7 +6,7 @@ export const queryPosts = `
       "category": category->name  ,
       "likes": likes[]->username,
       "countLikes":count(likes),
-      "comments": comments[]{
+      "comments": comments|order(createdAt desc)[]{
           "field" : field,
             "postBy":postBy->{image,name,username},
             "createdAt":postBy->_createdAt
@@ -17,7 +17,7 @@ export const queryPosts = `
       },
       "like":$username in likes[]->username,
       "postBy":postBy->{image,name, username},
-    } | order(createdAt desc)
+    } | order(_createdAt desc)
 `
 
 export const queryPostsByCaption = `
@@ -28,7 +28,7 @@ export const queryPostsByCaption = `
       "category": category->name  ,
       "likes": likes[]->username,
       "countLikes":count(likes),
-      "comments": comments[]{
+      "comments": comments|order(createdAt desc)[]{
           "field" : field,
             "postBy":postBy->{image,name,username},
             "createdAt":postBy->_createdAt
@@ -40,7 +40,7 @@ export const queryPostsByCaption = `
       "like":$username in likes[]->username,
       "postBy":postBy->{image,name, username},
 
-    } | order(createdAt)  
+    } | order(_createdAt desc)  
 `
 
 export const queryPostById = `
@@ -51,7 +51,7 @@ export const queryPostById = `
       "category": category->name  ,
       "likes":likes[]->username,
       "countLikes":count(likes),
-      "comments": comments[]{
+      "comments": comments|order(createdAt desc)[]{
           "field" : field,
             "postBy":postBy->{image,name,username},
             "createdAt":postBy->_createdAt

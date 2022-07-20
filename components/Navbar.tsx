@@ -8,8 +8,7 @@ import {AiOutlineLogout,AiOutlinePlus} from "react-icons/ai"
 import {FiSearch} from "react-icons/fi"
 import {dataIconAuthProviders} from "../utils/data"
 import Tooltip from "./Tooltip"
-import { useDispatch, useSelector } from "react-redux"
-import { handleTooltipAuth } from "../redux/actions/authAction"
+import {useSelector } from "react-redux"
 
 interface NavbarProps {
   type? : string;
@@ -18,7 +17,6 @@ interface NavbarProps {
 
 const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
   const tooltipAuth = useSelector(state=>state.auth.tooltipAuth)
-  console.log("tooltipState: ", tooltipAuth)
   const router = useRouter()
   const {data:session} = useSession()
   const handleUploadOnClick = ()=>{
@@ -36,13 +34,13 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
         <button className='md:hidden border-[0.005rem] h-8 w-8  flex justify-center items-center border-gray-200'>
           <FiSearch />
         </button>
-        <button onClick={()=>handleUploadOnClick()}  className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
-          <AiOutlinePlus/>
-          <span className="hidden md:block ">Upload</span>
-        </button>
         {
           session?(
             <>
+              <button onClick={()=>handleUploadOnClick()}  className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
+                <AiOutlinePlus/>
+                <span className="hidden md:block ">Upload</span>
+              </button>
               <img onClick={()=>router.push("/profile")} className="w-10 rounded-full cursor-pointer" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
               <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex rounded-full">
                 <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
@@ -52,8 +50,8 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
             <>
               {
                 providers&&Object.values(providers).map((provider,i)=>(
-                  <div className="relative group">
-                    <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex md:space-x-2 font-medium items-center justify-center text-[0.9rem]">
+                  <div  key={i} className="relative group">
+                    <button onClick={()=>signIn(provider.id)} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex md:space-x-2 font-medium items-center justify-center text-[0.9rem]">
                       <span className="hidden md:block ">
                         Sign In With
                       </span>

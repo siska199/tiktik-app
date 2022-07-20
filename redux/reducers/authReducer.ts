@@ -8,7 +8,7 @@ const initialState = {
 const authReducer = (state=initialState, action:any)=>{
     switch(action.type){
         case HANDLE_TOOLTIP_AUTH:
-            return{...state,tooltipAuth:!state.tooltipAuth}
+            return{...state,tooltipAuth:action.payload}
         case HANDLE_GET_PROVIDERS_DATA:
             return{...state, providers:action.payload}
         default:

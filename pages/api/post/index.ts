@@ -1,9 +1,12 @@
+import { getToken } from 'next-auth/jwt';
 import type { NextApiRequest, NextApiResponse } from "next";
 import client from "../../../utils/sanityClient/sanity";
 import { queryPosts, queryPostsByCaption } from "../../../utils/sanityClient/queries";
 
+const secret = process.env.JWT_SECRET
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const {query:{topic},method} = req
+    const token = await getToken({req,secret})
     if(method=="GET"){
         try {
             const query = topic ? queryPostsByCaption : queryPosts
@@ -26,7 +29,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
                     _type:"reference"
                 },
                 postBy :{
-                    _ref:"b2ef6ee1-674d-47a6-930d-aa009aafc178",
+                    _ref:token?.id,
                     _type:"reference"
                 },
                 video :{

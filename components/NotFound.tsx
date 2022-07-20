@@ -11,8 +11,8 @@ const NotFound : React.FC<Props> = ({type, }) => {
   const fixType = UppercaseTheFirstCharWord(type)
 
   return (
-    <section className={`flex flex-col text-[2rem] font-thin  h-full items-center justify-center`}>
-        <div className='text-[5rem]'>
+    <section className={`flex flex-col font-thin  h-full items-center justify-center`}>
+        <div className={`${type=="video"?"text-[5rem]":"text-[3rem]"} `}>
             {
                 type=="video"?(
                     <IoVideocamOffOutline/>
@@ -21,7 +21,7 @@ const NotFound : React.FC<Props> = ({type, }) => {
                 )
             }
         </div>
-        <h1>
+        <h1 className={`${type=="video"?"text-[2rem]":"text-[1rem]"} `}>
             {fixType} Not Found 
         </h1>
     </section>

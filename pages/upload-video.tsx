@@ -11,6 +11,7 @@ import Alert from '../components/Alert'
 import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
 import { handleFormValidationPost } from '../utils/function/formValidation'
+import LoadingIcon from '../components/LoadingIcon'
 
 interface PropsUploadVideo{
   categories? : {
@@ -29,7 +30,10 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const initialForm = {
     video : null,
     caption : "",
-    category:""
+    category: {
+      name :"default",
+      _id : ""
+    }
   }
   const initialAlert = {
     show:false, 
@@ -39,6 +43,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const [form, setForm] = useState(initialForm)
   const [videoUrl, setVideoUrl] = useState<string | undefined | null>("")
   const [alert, setAlert] = useState(initialAlert)
+  const [loading, setLoading] = useState(false)
   const inputVideoRef = useRef<HTMLInputElement | null>(null)
 
   const handleOnSelectUpload = ()=>{
@@ -93,12 +98,12 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
         },2500)
         return ""
       }
-      
-      
+      setLoading(true)
       dispatch(handleAddPost(form))
       .then(()=>{
         setForm(initialForm)
         setVideoUrl(null)
+        setLoading(false)
       })
     } catch (error) {
       throw error
@@ -154,7 +159,14 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
                   <Dropdown value={form.category} handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
                   <div className='flex gap-5 font-semimedium rounded-sm'>
                     <button onClick={(e)=>handleOnDiscard(e)} className='w-[8rem] py-1 rounded-[0.3rem] border-[0.005rem]'>Discard</button>
-                    <button onClick={(e)=>handleOnSubmit(e)} className='w-[8rem] py-1 bg-main rounded-[0.3rem] text-white'>Post</button>
+                    <button onClick={(e)=>handleOnSubmit(e)} className='w-[8rem] py-1 flex space-x-2 justify-center items-center bg-main rounded-[0.3rem] text-white'>
+                      <span>
+                        Post
+                      </span>
+                      {
+                        loading &&<LoadingIcon size={"w-4"}/> 
+                      }
+                    </button>
                   </div>
                 </form>
               </section>

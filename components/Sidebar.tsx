@@ -10,12 +10,14 @@ import Footer from "./Footer"
 const Sidebar = () => {
   const router = useRouter()
   const {topic} = router.query
-
+  console.log("topic: ", topic)
   return (
     <section className="sticky top-[3.5rem] flex flex-col flex-[0.1] md:flex-[0.3] max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
         <Link href="/?topic=all">
-          <div className="hidden md:flex md:p-5 md:border-b-[0.05rem] text-main space-x-3 items-center justify-center md:justify-start cursor-pointer">
-            <AiFillHome className="text-[1.2rem]"/>
+          <div className={`flex md:p-5 md:border-b-[0.05rem] text-main space-x-3 items-center justify-center md:justify-start cursor-pointer `}>
+            <div className={`${topic=="all" && "w-[2rem] h-[2rem] md:w-auto md:h-auto rounded-full border-main p-1 border-[0.005rem] bg-slate-200 md:bg-white md:p-0 md:border-none "} `}>
+              <AiFillHome className="text-[1.2rem] m-auto md:m-0"/>
+            </div>
             <h1 className="hidden md:block font-medium">For You</h1>
           </div>
         </Link>

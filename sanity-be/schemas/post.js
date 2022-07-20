@@ -49,6 +49,11 @@ export default {
           name: "comment",
           fields: [
             {
+              name : "createdAt",
+              title: "Created At",
+               type:"datetime"
+            },
+            {
               name: "field",
               title: "Field",
               type: "string",
