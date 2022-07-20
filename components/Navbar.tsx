@@ -44,7 +44,7 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
           session?(
             <>
               <img onClick={()=>router.push("/profile")} className="w-10 rounded-full cursor-pointer" src="https://i.pinimg.com/564x/3b/fe/3c/3bfe3ce20dbd887dcd5e8c4af0133adc.jpg"/>
-              <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex shadow-lg rounded-full">
+              <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex rounded-full">
                 <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
               </button>
             </>
@@ -53,7 +53,7 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
               {
                 providers&&Object.values(providers).map((provider,i)=>(
                   <div className="relative group">
-                    <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
+                    <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex md:space-x-2 font-medium items-center justify-center text-[0.9rem]">
                       <span className="hidden md:block ">
                         Sign In With
                       </span>
