@@ -2,8 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleAddComment } from '../redux/actions/postActions'
 
+interface AddCommentProps{
+  setRender : React.Dispatch<React.SetStateAction<boolean>>;
+  render : boolean;
+}
 
-const AddComment : React.FC = ({setRender, render}) => {
+const AddComment : React.FC<AddCommentProps> = ({setRender, render}) => {
   const dispatch = useDispatch()
   const [comment, setComment] = useState<string>("")
   const idPost = useSelector(state=>state.post.post._id)

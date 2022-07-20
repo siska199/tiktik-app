@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef } from 'react'
-import { useRouter } from "next/router"
 import { useDispatch} from 'react-redux'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
@@ -7,6 +6,8 @@ import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
 import {handleModalDetail} from "../redux/actions/postActions"
 import DetailPost from "./DetailPost"
 import Modal from "../layouts/Modal"
+import { useSession } from 'next-auth/react'
+import { handleTooltipAuth } from '../redux/actions/authAction'
 interface Props {
   url : string  | undefined; 
   _idPost?:string;
@@ -21,14 +22,15 @@ declare global {
 }
 
 const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
-  const customeStyle = {
-    video
-  }
+  const {data:session} = useSession()
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
+  const customeStyle = {
+    video
+  }
   
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
@@ -41,9 +43,16 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
   const handleOnClick = ()=>{
     switch(type){
       case "post": case "profile":
-        play&&handlePausedUnpause()
-        setModalDetail && setModalDetail(!modalDetail)
-        dispatch(handleModalDetail(!modalDetail))
+        if(session){
+          play&&handlePausedUnpause()
+          setModalDetail && setModalDetail(!modalDetail)
+          dispatch(handleModalDetail(!modalDetail))
+        }else{
+          dispatch(handleTooltipAuth())
+          setTimeout(()=>{
+            dispatch(handleTooltipAuth())
+          },5000)
+        }
         break;
       case "detail":
         handlePausedUnpause()
@@ -59,16 +68,14 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
     }
     return ()=>{
       (type=="post" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
-      setPlay(false)
     }
   },[])
 
   const handleIntersect = (entries, observer)=>{
     type=="post" && entries.forEach((entry,i)=>{
       if(entry.isIntersecting){ 
-        console.log(entry.target.autoPlay)
-          // entry.target.play()
-          // setPlay(true)
+        // entry.target.play()
+        // setPlay(true)
         }else{
           entry.target.pause()
           setPlay(false)
@@ -92,7 +99,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
         controls={type =="post" || type=="profile"?false:true}
       />
       {
-        (type=="post" || type=="profile") && (
+        (type=="profile") && (
         <div className={`absolute bottom-0 left-0 text-white border-none flex gap-3 p-2 text-[1.2rem]`}>
           {
             play?(

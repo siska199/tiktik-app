@@ -1,8 +1,8 @@
-import { HANDLE_GET_PROVIDERS_DATA, HANDLE_MODAL_AUTH } from './../actions-type/authAction';
+import { HANDLE_GET_PROVIDERS_DATA, HANDLE_TOOLTIP_AUTH } from './../actions-type/authAction';
 
-export const handleModalAuth = () => {
+export const handleTooltipAuth = () => {
     return({
-        type:HANDLE_MODAL_AUTH,
+        type:HANDLE_TOOLTIP_AUTH,
         payload :""
     })
 }

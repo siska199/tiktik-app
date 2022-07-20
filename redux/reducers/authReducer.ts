@@ -1,14 +1,14 @@
-import { HANDLE_MODAL_AUTH, HANDLE_GET_PROVIDERS_DATA } from '../actions-type/authAction';
+import { HANDLE_TOOLTIP_AUTH, HANDLE_GET_PROVIDERS_DATA } from '../actions-type/authAction';
 
 
 const initialState = {
-    modalAuth : false
+    tooltipAuth : false
 }
 
 const authReducer = (state=initialState, action:any)=>{
     switch(action.type){
-        case HANDLE_MODAL_AUTH:
-            return{...state,modalAuth:!state.modalAuth}
+        case HANDLE_TOOLTIP_AUTH:
+            return{...state,tooltipAuth:!state.tooltipAuth}
         case HANDLE_GET_PROVIDERS_DATA:
             return{...state, providers:action.payload}
         default:

@@ -7,12 +7,18 @@ import Search from "./Search"
 import {AiOutlineLogout,AiOutlinePlus} from "react-icons/ai"
 import {FiSearch} from "react-icons/fi"
 import {dataIconAuthProviders} from "../utils/data"
+import Tooltip from "./Tooltip"
+import { useDispatch, useSelector } from "react-redux"
+import { handleTooltipAuth } from "../redux/actions/authAction"
+
 interface NavbarProps {
   type? : string;
   providers? : object;
 }
 
 const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
+  const tooltipAuth = useSelector(state=>state.auth.tooltipAuth)
+  console.log("tooltipState: ", tooltipAuth)
   const router = useRouter()
   const {data:session} = useSession()
   const handleUploadOnClick = ()=>{
@@ -46,12 +52,15 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
             <>
               {
                 providers&&Object.values(providers).map((provider,i)=>(
-                  <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
-                    <span className="hidden md:block ">
-                      Sign In With
-                    </span>
-                      {dataIconAuthProviders[i].icon}
-                  </button>
+                  <div className="relative group">
+                    <button onClick={()=>signIn(provider.id)} key={i} className="border-[0.005rem] h-8 w-8 md:w-auto md:px-3 flex space-x-2 font-medium items-center justify-center text-[0.9rem]">
+                      <span className="hidden md:block ">
+                        Sign In With
+                      </span>
+                        {dataIconAuthProviders[i].icon}
+                    </button>
+                    {tooltipAuth&& <Tooltip message={"Log in here"}/>}
+                  </div>
                 ))
               }
             </>

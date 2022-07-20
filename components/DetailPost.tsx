@@ -1,12 +1,11 @@
 import React, { useEffect, useState} from 'react'
-import {BsArrowLeft, BsFillSuitHeartFill} from "react-icons/bs"
+import {BsFillSuitHeartFill} from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
 import Video from './Video';
 import {handleGetPost, handleAddRemoveLove} from "../redux/actions/postActions"
 import UserInfo from './UserInfo';
 import AddComment from './AddComment';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { handleModalAuth } from '../redux/actions/authAction';
 
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
 }
 
 const DetailPost : React.FC<Props> = ({ _idPost}) => {
-  const router = useRouter()
   const {data:session} = useSession() 
   const dispatch = useDispatch()
   const post = useSelector(state=> state.post.post)
@@ -25,7 +23,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
   },[render])
 
   const handleLove = ()=>{
-    if(session){
+    if(!session){
       dispatch(handleModalAuth())
       return
     }
@@ -43,13 +41,9 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
     <>
       {
         post.video && (
-            <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>
-              <section className='w-full h-10  bg-white sm:hidden flex items-center px-3 py-2'>
-                <BsArrowLeft className='text-[1.5rem] cursor-pointer'  onClick={()=>handleCloseModal()} />
-              </section>
-  
+            <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>  
               <section className={` group flex justify-center items-center sm:rounded-l-md `}>
-                <Video url={post.video.url} type="detail" customeStyle={{video:"lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"}}/>
+              <Video url={post.video.url} type="detail" video="lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"/>
               </section>
               
               <section className='flex flex-col h-full w-full sm:w-[40%] flex-grow'>
