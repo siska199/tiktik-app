@@ -40,6 +40,17 @@ export default {
       ],
     },
     {
+      name : "bookmarks",
+      title : "Bookmarks",
+      type : "array",
+      of : [
+        {
+          type : "reference",
+          to : {type:"user"}
+        }
+      ]
+    },
+    {
       name: "comments",
       title: "Comments",
       type: "array",
@@ -51,7 +62,7 @@ export default {
             {
               name : "createdAt",
               title: "Created At",
-               type:"datetime"
+              type:"datetime"
             },
             {
               name: "field",
@@ -62,7 +73,7 @@ export default {
               name: "postBy",
               tittle: "PostBy",
               type: "reference",
-              to :{type:"user"}
+              to: {type:"user"}
             },
           ],
         },

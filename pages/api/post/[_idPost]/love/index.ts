@@ -9,15 +9,16 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
     const token = await getToken({req, secret})
     if(method=="POST"){
         try {
-            const username = token?.name?.toLowerCase().split(' ').slice(0,2).join('')
+            const _idUser = token? token.id : ""
             const {_idPost} = req.query
             const {body} = req
+            console.log("body like", body)
             let resLike 
             if(body.like != -1){
-                resLike = await client.patch(_idPost).unset([`likes[${body.like}]`]).commit()
+                resLike = await client.patch(_idPost).unset([`likes[_key==${body.likeKeyUser}]`]).commit()
             }else{
                 const doc = {
-                    _ref : username,
+                    _ref : _idUser,
                     _type : "reference"
                 }
                 resLike = await client.patch(_idPost)
@@ -30,4 +31,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
             res.status(500).send(error)
         }
     }
+
+    
 }

@@ -7,7 +7,8 @@ import NotFound from '../components/NotFound'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { handleGetProviders } from '../redux/actions/authAction'
-
+import {postsURL} from "../utils/url"
+import { getToken } from "next-auth/jwt"
 interface PropsIndex{
   providers : object;
   posts : {
@@ -22,6 +23,7 @@ interface PropsIndex{
       _id:string;
     },
     _id : string;
+    bookmark : string;
   }[];
 }
 
@@ -32,6 +34,7 @@ const Home: NextPage<PropsIndex> = ({providers, posts}) => {
   useEffect(()=>{
     dispatch(handleGetProviders(providers))
   },[])
+
   return (
     <LayoutPage type="homepage" providers={providers}>
       <div className={`${modalDetail&&""} flex-[0.7] flex-col flex-grow py-5`}>
@@ -39,9 +42,13 @@ const Home: NextPage<PropsIndex> = ({providers, posts}) => {
           posts?.length>0 ?(
             <>            
               {
-                posts?.map((data,i)=>(
-                  <Post _idPost={data._id} key={i} image={data.postBy.image} name={data.postBy.name} username={data.postBy.username} caption={data.caption} video={data.video}/>
-                ))
+                posts?.map((data,i)=>{
+                  console.log(data)
+                  return(
+                    <Post key={i} _idPost={data._id} image={data.postBy.image} name={data.postBy.name} username={data.postBy.username} caption={data.caption} video={data.video} bookmark={data.bookmark}/>
+                  )
+                }
+                )
               }
             </>
           ):(
@@ -59,9 +66,8 @@ export const getServerSideProps = async(context:any)=>{
   try {
     const {topic} = context.query
     const providers = await getProviders()
-    const url = topic && topic !="all" ?`${process.env.NEXTAUTH_URL}/api/post?topic=${topic}`:`${process.env.NEXTAUTH_URL}/api/post`
+    const url = topic && topic !="all" ?`${postsURL}?topic=${topic}`: postsURL
     const posts = await fetch(url).then(res=>res.json())
-    
     return{
       props :{
         providers,

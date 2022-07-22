@@ -8,11 +8,14 @@ import DetailPost from "./DetailPost"
 import Modal from "../layouts/Modal"
 import { useSession } from 'next-auth/react'
 import { handleTooltipAuth } from '../redux/actions/authAction'
+import {BsBookmarkHeart} from "react-icons/bs"
+
 interface Props {
   url : string  | undefined; 
   _idPost?:string;
   type? : string;
-  video? : string 
+  video? : string;
+  bookmark : string; 
 }
 
 declare global {
@@ -21,16 +24,13 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
+const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
   const {data:session} = useSession()
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
-  const customeStyle = {
-    video
-  }
   
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
@@ -89,9 +89,16 @@ const Video : React.FC<Props> = ({url, _idPost, type, video}) => {
   }
   
   return (
-    <section className='relative'>
+    <section className='relative '>
+      {
+        session&&(
+        <div className={`absolute ${type=="detail"&&"z-[99] shadow-md"} z-[20] w-10 h-10 flex rounded-full group hover:bg-slate-500 cursor-pointer right-2 top-2 `}>
+          <BsBookmarkHeart className={`m-auto ${bookmark&&"text-main"} text-white  text-[1.5rem]`}/>
+        </div>
+        )
+      }
       <video 
-        className={`cursor-pointer ${customeStyle?.video}`}
+        className={`cursor-pointer ${video}`}
         muted={muted}
         ref={refVideo} 
         src={url}

@@ -6,7 +6,7 @@ import store from '../redux/store'
 
 import { useState } from 'react'
 import Router from 'next/router'
-import LoadingPage from '../components/LoadingPage'
+import ProgressBar from '../components/ProgressBar'
 
 
 function MyApp({ Component, pageProps : {session, ...pageProps} }: AppProps) : JSX.Element {
@@ -21,13 +21,8 @@ function MyApp({ Component, pageProps : {session, ...pageProps} }: AppProps) : J
   return(
     <SessionProvider session={session}>
       <Provider store={store}>
-        {
-          loading?(
-            <LoadingPage/>
-          ):(
-            <Component {...pageProps} />
-          )
-        }
+        <ProgressBar isAnimating={loading}/>
+        <Component {...pageProps} />
       </Provider>
     </SessionProvider>
   )

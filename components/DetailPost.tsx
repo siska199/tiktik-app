@@ -13,6 +13,7 @@ interface Props {
 }
 
 const DetailPost : React.FC<Props> = ({ _idPost}) => {
+  console.log("idPost: ", _idPost)
   const {data:session} = useSession() 
   const dispatch = useDispatch()
   const post = useSelector(state=> state.post.post)
@@ -26,7 +27,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
 
     const dataLove = {
       idPost : _idPost,
-      like: post.like
+      likeKeyUser: post.like
     }
     dispatch(handleAddRemoveLove(dataLove)).then(()=>{
       setRender(!render)
@@ -39,7 +40,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
         post.video && (
             <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>  
               <section className={`group flex justify-center items-center sm:rounded-l-md `}>
-              <Video url={post.video.url} type="detail" video="lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"/>
+              <Video url={post.video.url} bookmark={post.bookmark} type="detail" video="lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"/>
               </section>
               
               <section className='flex flex-col h-full w-full sm:w-[40%] flex-grow'>
@@ -48,7 +49,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
                     <p className='text-sm leading-[1.2rem] font-thin sm:max-h-[20vh] sm:overflow-y-scroll'>{post.caption}</p>
                     <div className=''>
                       <div onClick={()=>handleLove()} className={`${!session&&"pointer-events-none"} w-10 h-10 flex rounded-full bg-slate-200 cursor-pointer`}>
-                        <BsFillSuitHeartFill className={`m-auto ${post.like != -1?"text-main":"text-gray-400"}`}/>
+                        <BsFillSuitHeartFill className={`m-auto ${post.like?"text-main":"text-gray-400"}`}/>
                       </div>
                       <p className='font-semibold text-sm w-10 flex justify-center'>{post.countLikes}</p>
                     </div>

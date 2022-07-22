@@ -12,6 +12,7 @@ const Alert:React.FC<PropsAlert> = ({type, message}) => {
             style = "bg-rose-300 text-rose-800"
             break;
         case "success":
+            style = "bg-green-300 text-green-800"
             break
         default :
             break;

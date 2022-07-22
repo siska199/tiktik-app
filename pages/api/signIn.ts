@@ -1,14 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import client from "../../utils/sanityClient/sanity"
 
-
 export default async function handler(req:NextApiRequest,res:NextApiResponse){
     const {method} = req
-    console.log("masok")
     if(method=="POST"){
         try {
             const {body} = req
-            console.log("body get: ", body)
             const username = body.name.toLowerCase().split(' ').slice(0,2).join('')
             const doc = {
                 _type : "user",

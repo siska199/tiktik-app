@@ -17,6 +17,10 @@ export default NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      token.id = token.sub;
+      return token;
+    },
     async signIn({ user, account, profile, email, credentials }) {
       await fetch(`${process.env.BASE_URL}/api/signIn`, {
         method: "POST",
@@ -26,11 +30,6 @@ export default NextAuth({
         body: JSON.stringify(user),
       });
       return true;
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      token.id = token.sub;
-      console.log("token: ", token)
-      return token;
     },
   },
 });

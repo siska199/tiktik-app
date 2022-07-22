@@ -1,12 +1,13 @@
 import { getToken } from 'next-auth/jwt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import client from '../../../../../utils/sanityClient/sanity';
+import { secret } from '../../../../../utils/constanta';
 
-const secret = process.env.JWT_SECRET
 export default async function handler(req:NextApiRequest, res:NextApiResponse){
-    const {method} = req 
-    const {_idPost} = req.query
     const token = await getToken({req,secret})
+    const _idUser = token ? token : ""
+    const {_idPost} = req.query
+    const {method} = req 
     if(method=="POST"){
         try {            
             const {body} = req
@@ -14,7 +15,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
                 field :body.comment,
                 createdAt : Date.now(),
                 postBy :{
-                    _ref :token?.id,
+                    _ref :_idUser,
                     _type:"reference"
                 }
             }   
