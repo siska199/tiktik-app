@@ -128,7 +128,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
             </header>
             
             <article className='flex flex-col md:flex-row'>
-              <section onClick={()=>handleOnSelectUpload()} className={`flex relative items-center ${videoUrl?"bg-black cursor-none":"bg-gray-100 border-dashed border-rose-300 border-2 text-center cursor-pointer"}  md:rounded-lg w-[15rem] h-[25rem] `}>
+              <section onClick={()=>handleOnSelectUpload()} className={`flex relative items-center ${videoUrl?"bg-black":"bg-gray-100 border-dashed border-rose-300 border-2 text-center cursor-pointer"}  md:rounded-lg w-[15rem] h-[25rem] `}>
                   {
                     videoUrl?(
                       <>
