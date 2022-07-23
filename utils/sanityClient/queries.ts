@@ -1,8 +1,12 @@
 export const queryCategories = `
-    *[_type=="category"]{
-      _id,
-      name
-    }
+*[_type=="category" ]{
+  _id,
+  name,
+  "icon" : icon{
+    "_id": asset->_id,
+    "url": asset->url
+   }
+} | order(_createdAt desc) 
 `
 
 export const queryPosts = `
@@ -21,6 +25,34 @@ export const queryPosts = `
 
 export const queryPostsByCaption = `
     *[_type=="post" && category->name==$topic]{
+      _id,
+      _createdAt,
+      caption,
+      "bookmark":bookmarks[_ref==$_idUser][0]._key,
+      video{
+        "url" : asset->url,
+        "_id": asset->_id
+      },
+      "postBy":postBy->{image,name, username},
+    } | order(_createdAt desc)  
+`
+
+export const queryPostsPostedByUser = `
+    *[_type=="post" && postBy._ref==$_idUser]{
+      _id,
+      _createdAt,
+      caption,
+      "bookmark":bookmarks[_ref==$_idUser][0]._key,
+      video{
+        "url" : asset->url,
+        "_id": asset->_id
+      },
+      "postBy":postBy->{image,name, username},
+    } | order(_createdAt desc)  
+`
+
+export const queryPostsBookmarkedByUser = `
+    *[_type=="post" && $_idUser in bookmarks[]._ref]{
       _id,
       _createdAt,
       caption,

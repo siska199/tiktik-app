@@ -19,7 +19,7 @@ const Post : React.FC<Props> = ({image, name, username, caption, video, _idPost,
     <section className='p-5  md:w-[80%] ml-auto  '>
       <UserInfo image={image} username={username} name={name} type="post" caption={caption}/>
       <div className=' w-[92%] h-[60vh] border bg-gray-200 sm:bg-white sm:border-none flex flex-col justify-center ml-auto my-5 '>
-        <Video video="sm:rounded-lg"  url={video.url} _idPost={_idPost} type="post"  bookmark={bookmark}/>
+        <Video url={video.url} _idPost={_idPost} type="post"  bookmark={bookmark}/>
       </div>
     </section>
   )

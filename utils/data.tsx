@@ -151,7 +151,7 @@ export const dataCategoriesProfile : Array<dataCategoriesProfile> = [
   {
     name : "Videos"
   },{
-    name : "Liked"
+    name : "Bookmarks"
   }
 ]
 

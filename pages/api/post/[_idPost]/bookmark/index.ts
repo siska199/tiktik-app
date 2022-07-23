@@ -9,21 +9,24 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
     const {_idPost} = req.query
     const {method} = req
 
-
     if(method=="POST"){
         try {
             const {body} = req
+            console.log("req body for bookmark: ", body)
             const doc = {
                 _ref : _idUser,
                 _type : "reference"
             }
             let resBookmark 
-            if(body.bookmark)
+            if(body.bookmark){
+                await client.patch(_idPost).unset([`bookmarks[_key==${body.bookmarkKeyUser}]`]).commit()
+            }else{
+                await client.patch(_idPost)
+                            .setIfMissing({bookmarks:[]})
+                            .append('bookmarks',[doc])
+                            .commit({autoGenerateArrayKeys:true})
+            }
 
-            await client.patch(_idPost)
-                        .setIfMissing({bookmarks:[]})
-                        .append('bookmarks',[doc])
-                        .commit({autoGenerateArrayKeys:true})
             res.status(201).send('Add bookmark success')
         } catch (error) {
             res.status(500).send(error)

@@ -8,10 +8,10 @@ import Video from '../components/Video'
 import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
 import Alert from '../components/Alert'
+import LoadingIcon from '../components/LoadingIcon'
 import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
 import { handleFormValidationPost } from '../utils/function/formValidation'
-import LoadingIcon from '../components/LoadingIcon'
 
 interface PropsUploadVideo{
   categories? : {
@@ -23,7 +23,9 @@ interface PropsUploadVideo{
 const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const dispatch = useDispatch()
   const categories = useSelector(state=>state.category.categories)
+  
   useEffect(()=>{
+    console.log("run once")
     dispatch(handleGetCategories())
   },[])
   
@@ -65,7 +67,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
         break;
       case "category":
         data = {
-          name,
+          name : e.target.value,
           _id :  e.target.options[e.target.selectedIndex].dataset.id
         }
         break;
@@ -156,7 +158,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
                 <form action="" autoComplete='off' className='flex flex-col gap-5 py-5 md:py-10 md:px-10'>
                 {alert.show && <Alert type={alert.type} message={alert.message}/>}
                   <Input value={form.caption} handleOnChange={handleOnChange} type="text" label="Caption"/>
-                  <Dropdown value={form.category} handleOnChange={handleOnChange}  label={"Category"} dataCategory={categories}/>
+                  <Dropdown dataCategory={form.category} handleOnChange={handleOnChange}  label={"Category"} dataCategories={categories}/>
                   <div className='flex gap-5 font-semimedium rounded-sm'>
                     <button onClick={(e)=>handleOnDiscard(e)} className='w-[8rem] py-1 rounded-[0.3rem] border-[0.005rem]'>Discard</button>
                     <button onClick={(e)=>handleOnSubmit(e)} className='w-[8rem] py-1 flex space-x-2 justify-center items-center bg-main rounded-[0.3rem] text-white'>

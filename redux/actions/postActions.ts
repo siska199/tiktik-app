@@ -1,5 +1,4 @@
-import {Action, ActionCreator, Dispatch} from 'redux';
-import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE } from './../actions-type/postTypeAction';
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
@@ -68,7 +67,6 @@ export const handleAddComment: Function = (data)=>async(dispatch, getState)=>{
     }
 }
 
-
 export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=>{
     try {
         const resLike = await fetch(`api/post/${data.idPost}/love`,{
@@ -77,12 +75,31 @@ export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=
                 'Content-Type':'application/json'
             },
             body : JSON.stringify({
-                like : data.like
+                likeKeyUser : data.likeKeyUser
             })
         })
         return dispatch({
             type : HANDLE_ADD_REMOVE_LOVE,
             payload : resLike
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+export const handleAddRemoveBookmark:Function = (data)=>async(dispatch, getState)=>{
+    try {
+        console.log("data bookmark: ", data)
+        const resBookmark = await fetch(`/post/${data.idPost}/bookmark`,{
+            method : "POST",
+            body : JSON.stringify({
+                bookmarkKeyUser : data.likeKeyUser
+            })
+        })
+        console.log("resBookmark: ", resBookmark)
+        return({
+            type : HANDLE_ADD_REMOVE_BOOKMARK,
+            payload : resBookmark
         })
     } catch (error) {
         throw error

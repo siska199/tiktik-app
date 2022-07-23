@@ -6,14 +6,12 @@ import { secret } from '../../../utils/constanta';
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const token = await getToken({req,secret})
-    const _idUser = token ? token.id : "" 
-
-    const {query:{topic="",idUser},method} = req
+    const {query:{topic="",idUser=""},method} = req
     
     if(method=="GET"){
         try {
             const query = topic ? queryPostsByCaption : queryPosts
-            const params = {_idUser:_idUser?_idUser:idUser,topic}
+            const params = {_idUser:idUser,topic}
             let dataPosts = await client.fetch(query, params)
             res.status(200).json(dataPosts)
         } catch (error) {
@@ -32,7 +30,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
                     _type:"reference"
                 },
                 postBy :{
-                    _ref:_idUser,
+                    _ref:token?.id,
                     _type:"reference"
                 },
                 video :{

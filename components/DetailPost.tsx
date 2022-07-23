@@ -24,7 +24,6 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
   },[render])
 
   const handleLove = ()=>{
-
     const dataLove = {
       idPost : _idPost,
       likeKeyUser: post.like
@@ -40,7 +39,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
         post.video && (
             <div className='m-auto bg-white w-full h-full sm:w-[80%] sm:h-[90%] sm:rounded-md flex flex-col sm:flex-row md:!overflow-y-scroll'>  
               <section className={`group flex justify-center items-center sm:rounded-l-md `}>
-              <Video url={post.video.url} bookmark={post.bookmark} type="detail" video="lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"/>
+              <Video url={post.video.url} bookmark={post.bookmark} type="detail" />
               </section>
               
               <section className='flex flex-col h-full w-full sm:w-[40%] flex-grow'>

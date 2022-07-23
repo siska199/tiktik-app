@@ -30,8 +30,8 @@ const profile = () => {
               <div className='my-4 flex flex-col gap-10'>
                   {
                     videos.map((data,i)=>(
-                      <div key={i}>
-                        <Video video="rounded-lg" url={data.video} type="profile"/>
+                      <div key={i} className="md:w-[90%]">
+                        <Video bookmark={""} url={data.video} type="profile"/>
                       </div>
                     ))
                   }

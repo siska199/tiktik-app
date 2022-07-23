@@ -1,21 +1,20 @@
 import React, {useEffect, useState, useRef } from 'react'
 import { useDispatch} from 'react-redux'
+import { useSession } from 'next-auth/react'
 import {AiOutlinePause} from "react-icons/ai"
 import {FiPlay} from "react-icons/fi"
 import {GiSpeaker, GiSpeakerOff} from "react-icons/gi"
-import {handleModalDetail} from "../redux/actions/postActions"
+import {BsBookmarkHeart} from "react-icons/bs"
+import {handleModalDetail, handleAddRemoveBookmark} from "../redux/actions/postActions"
+import { handleTooltipAuth } from '../redux/actions/authAction'
 import DetailPost from "./DetailPost"
 import Modal from "../layouts/Modal"
-import { useSession } from 'next-auth/react'
-import { handleTooltipAuth } from '../redux/actions/authAction'
-import {BsBookmarkHeart,BsFillBookmarkHeartFill} from "react-icons/bs"
 
 interface Props {
   url : string  | undefined; 
   _idPost?:string;
   type? : string;
-  video? : string;
-  bookmark : string; 
+  bookmark? : string; 
 }
 
 declare global {
@@ -24,14 +23,30 @@ declare global {
   }
 }
 
-const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
-  console.log("bookmark video: ", bookmark)
+const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, render}) => {
   const {data:session} = useSession()
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
+
+  const customeStyle = {
+    video : ""
+  }
+  switch(type){
+    case "profile":
+      customeStyle.video = "rounded-lg w-full"
+      break;
+    case "post":
+      customeStyle.video = "sm:rounded-lg"
+      break;
+    case "detail":
+      customeStyle.video = "lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"
+      break;
+    default:
+      break;
+  }
 
   useEffect(()=>{
     const observerVideo = new IntersectionObserver(handleIntersect,{
@@ -85,20 +100,26 @@ const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
     
   }
   const handleBookmark = ()=>{
-
+    const dataBookmark = {
+      idPost : _idPost,
+      bookmarkKeyUser: bookmark
+    }
+    dispatch(handleAddRemoveBookmark(dataBookmark)).then(()=>{
+      setRender(!render)
+    })
   }
 
   return (
     <section className='relative '>
       {
-        session&&(
+        (session && type!="uploadVideo") &&(
         <div onClick={()=>handleBookmark()} className={`absolute ${type=="detail"&&"z-[99] shadow-md"} text-[1.5rem] z-[20] w-10 h-10 flex rounded-full group ${bookmark&&"hover:bg-slate-300"} hover:bg-slate-200 cursor-pointer right-2 top-2 `}>
           <BsBookmarkHeart className={`m-auto ${bookmark&&"text-rose-600"} text-stone-500 `}/>
         </div>
         )
       }
       <video 
-        className={`cursor-pointer ${video}`}
+        className={`cursor-pointer ${customeStyle.video}`}
         muted={muted}
         ref={refVideo} 
         src={url}
