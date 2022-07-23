@@ -42,12 +42,9 @@ const Home: NextPage<PropsIndex> = ({providers, posts}) => {
           posts?.length>0 ?(
             <>            
               {
-                posts?.map((data,i)=>{
-                  console.log(data)
-                  return(
-                    <Post key={i} _idPost={data._id} image={data.postBy.image} name={data.postBy.name} username={data.postBy.username} caption={data.caption} video={data.video} bookmark={data.bookmark}/>
-                  )
-                }
+                posts?.map((data,i)=>(
+                  <Post key={i} _idPost={data._id} image={data.postBy.image} name={data.postBy.name} username={data.postBy.username} caption={data.caption} video={data.video} bookmark={data.bookmark}/>
+                )
                 )
               }
             </>
@@ -64,9 +61,10 @@ export default Home
 
 export const getServerSideProps = async(context:any)=>{
   try {
+    const token = await getToken({req:context.req, secret: process.env.JWT_SECRET})
     const {topic} = context.query
     const providers = await getProviders()
-    const url = topic && topic !="all" ?`${postsURL}?topic=${topic}`: postsURL
+    const url = topic && topic !="all" ?`${postsURL}?topic=${topic}&&idUser=${token?.id}`: `${postsURL}?idUser=${token?.id}`
     const posts = await fetch(url).then(res=>res.json())
     return{
       props :{

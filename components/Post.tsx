@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import Reac from 'react'
 import UserInfo from './UserInfo'
 import Video from './Video';
 interface Props {

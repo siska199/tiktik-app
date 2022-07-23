@@ -8,7 +8,7 @@ import DetailPost from "./DetailPost"
 import Modal from "../layouts/Modal"
 import { useSession } from 'next-auth/react'
 import { handleTooltipAuth } from '../redux/actions/authAction'
-import {BsBookmarkHeart} from "react-icons/bs"
+import {BsBookmarkHeart,BsFillBookmarkHeartFill} from "react-icons/bs"
 
 interface Props {
   url : string  | undefined; 
@@ -25,18 +25,30 @@ declare global {
 }
 
 const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
+  console.log("bookmark video: ", bookmark)
   const {data:session} = useSession()
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
-  
+
+  useEffect(()=>{
+    const observerVideo = new IntersectionObserver(handleIntersect,{
+      threshold : 1.0,
+    })
+    if(type=="post" && refVideo.current ){    
+      observerVideo.observe(refVideo.current)
+    }
+    return ()=>{
+      (type=="post" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
+    }
+  },[])
+
   const handlePausedUnpause = () =>{
     play ? refVideo?.current?.pause() : refVideo?.current?.play()
     setPlay(!play)
   }
-
   const handleAudio = ()=>{
     setMuted(!muted)
   }
@@ -60,17 +72,6 @@ const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
         break;
     }
   }
-
-  useEffect(()=>{
-    const observerVideo = new IntersectionObserver(handleIntersect,optionsObserver)
-    if(type=="post" && refVideo.current ){    
-      observerVideo.observe(refVideo.current)
-    }
-    return ()=>{
-      (type=="post" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
-    }
-  },[])
-
   const handleIntersect = (entries, observer)=>{
     type=="post" && entries.forEach((entry,i)=>{
       if(entry.isIntersecting){ 
@@ -83,17 +84,16 @@ const Video : React.FC<Props> = ({url, _idPost, type, video="", bookmark}) => {
       })
     
   }
+  const handleBookmark = ()=>{
 
-  const optionsObserver = {
-    threshold : 1.0,
   }
-  
+
   return (
     <section className='relative '>
       {
         session&&(
-        <div className={`absolute ${type=="detail"&&"z-[99] shadow-md"} z-[20] w-10 h-10 flex rounded-full group hover:bg-slate-500 cursor-pointer right-2 top-2 `}>
-          <BsBookmarkHeart className={`m-auto ${bookmark&&"text-main"} text-white  text-[1.5rem]`}/>
+        <div onClick={()=>handleBookmark()} className={`absolute ${type=="detail"&&"z-[99] shadow-md"} text-[1.5rem] z-[20] w-10 h-10 flex rounded-full group ${bookmark&&"hover:bg-slate-300"} hover:bg-slate-200 cursor-pointer right-2 top-2 `}>
+          <BsBookmarkHeart className={`m-auto ${bookmark&&"text-rose-600"} text-stone-500 `}/>
         </div>
         )
       }
