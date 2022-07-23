@@ -8,7 +8,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
     const _idUser = token ? token.id : ""
     const {_idPost} = req.query
     const {method} = req
-
+    console.log("masokkk bookmark")
     if(method=="POST"){
         try {
             const {body} = req
@@ -18,16 +18,16 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
                 _type : "reference"
             }
             let resBookmark 
-            if(body.bookmark){
-                await client.patch(_idPost).unset([`bookmarks[_key==${body.bookmarkKeyUser}]`]).commit()
+            if(body.bookmarkKeyUser){
+                resBookmark = await client.patch(_idPost).unset([`bookmarks[_key=="${body.bookmarkKeyUser}"]`]).commit()
             }else{
-                await client.patch(_idPost)
+              resBookmark =  await client.patch(_idPost)
                             .setIfMissing({bookmarks:[]})
                             .append('bookmarks',[doc])
                             .commit({autoGenerateArrayKeys:true})
             }
 
-            res.status(201).send('Add bookmark success')
+            res.status(201).send(resBookmark)
         } catch (error) {
             res.status(500).send(error)
         }

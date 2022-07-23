@@ -5,7 +5,7 @@ import { secret } from '../../../../../utils/constanta';
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse){
     const token = await getToken({req,secret})
-    const _idUser = token ? token : ""
+    const _idUser = token ? token.id : ""
     const {_idPost} = req.query
     const {method} = req 
     if(method=="POST"){

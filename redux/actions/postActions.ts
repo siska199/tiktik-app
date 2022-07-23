@@ -26,7 +26,6 @@ export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
                 }
             })
         })
-        
         return dispatch({
             type: HANDLE_ADD_POST,
             payload : resAddPost
@@ -78,6 +77,7 @@ export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=
                 likeKeyUser : data.likeKeyUser
             })
         })
+        
         return dispatch({
             type : HANDLE_ADD_REMOVE_LOVE,
             payload : resLike
@@ -89,15 +89,18 @@ export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=
 
 export const handleAddRemoveBookmark:Function = (data)=>async(dispatch, getState)=>{
     try {
-        console.log("data bookmark: ", data)
-        const resBookmark = await fetch(`/post/${data.idPost}/bookmark`,{
+        console.log("data bookmark masuk action: ", data)
+        const resBookmark = await fetch(`api/post/${data.idPost}/bookmark`,{
             method : "POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
             body : JSON.stringify({
-                bookmarkKeyUser : data.likeKeyUser
+                bookmarkKeyUser : data.bookmarkKeyUser 
             })
         })
         console.log("resBookmark: ", resBookmark)
-        return({
+        return dispatch({
             type : HANDLE_ADD_REMOVE_BOOKMARK,
             payload : resBookmark
         })

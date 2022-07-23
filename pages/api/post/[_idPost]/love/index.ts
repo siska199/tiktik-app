@@ -12,10 +12,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
             const _idUser = token? token.id : ""
             const {_idPost} = req.query
             const {body} = req
-            console.log("body like", body)
             let resLike 
-            if(body.like != -1){
-                resLike = await client.patch(_idPost).unset([`likes[_key==${body.likeKeyUser}]`]).commit()
+            if(body.likeKeyUser){
+                resLike = await client.patch(_idPost).unset([`likes[_key=="${body.likeKeyUser}"]`]).commit()
             }else{
                 const doc = {
                     _ref : _idUser,

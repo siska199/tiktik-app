@@ -14,13 +14,8 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             const params = {_idPost,_idUser}
             const query = queryPostById
             const resPostById = await client.fetch(query, params)
-            resPostById.likes = resPostById.likes? resPostById.likes : []
-            const indexLike = resPostById.likes.findIndex(like=>like==_idUser)
 
-            res.status(200).send({
-                ...resPostById,
-                like : indexLike
-            })
+            res.status(200).send(resPostById)
         } catch (error) {
             res.status(500).send(`${error}`)
         }
