@@ -106,6 +106,10 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
         setForm(initialForm)
         setVideoUrl(null)
         setLoading(false)
+        setAlert({show:true, type:"success", message:"Post video success"})
+        setTimeout(()=>{
+          setAlert(initialAlert)
+        },2500)
       })
     } catch (error) {
       throw error
