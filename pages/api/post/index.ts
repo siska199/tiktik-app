@@ -1,3 +1,4 @@
+import { queryPostsPostedByUser, queryPostsBookmarkedByUser } from './../../../utils/sanityClient/queries';
 import { getToken } from 'next-auth/jwt';
 import type { NextApiRequest, NextApiResponse } from "next";
 import client from "../../../utils/sanityClient/sanity";
@@ -6,12 +7,27 @@ import { secret } from '../../../utils/constanta';
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const token = await getToken({req,secret})
-    const {query:{topic="",idUser=""},method} = req
+    const {query:{topic="",_idUser="",type=""},method} = req
     
     if(method=="GET"){
         try {
-            const query = topic ? queryPostsByCaption : queryPosts
-            const params = {_idUser:idUser,topic}
+            let query = topic ? queryPostsByCaption : queryPosts
+            switch(type){
+                case "category":
+                    query = queryPostsByCaption
+                    break;
+                case "posted":
+                    query = queryPostsPostedByUser
+                    break;
+                case "bookmarked":
+                    query = queryPostsBookmarkedByUser
+                    break;
+                default:
+                    query = queryPosts
+                    break;
+            }
+            console.log("query poseted: ", queryPosts)
+            const params = {_idUser,topic}
             let dataPosts = await client.fetch(query, params)
             res.status(200).json(dataPosts)
         } catch (error) {

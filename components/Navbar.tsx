@@ -41,7 +41,7 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
                 <AiOutlinePlus/>
                 <span className="hidden md:block ">Upload</span>
               </button>
-              <img onClick={()=>router.push("/profile")} className="w-10 rounded-full border-[0.005rem] cursor-pointer" src={session?.user?.image}/>
+              <img onClick={()=>router.push(`/profile?user=${session?.user?.id}`)} className="w-10 rounded-full border-[0.005rem] cursor-pointer" src={session?.user?.image}/>
               <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex rounded-full">
                 <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
               </button>

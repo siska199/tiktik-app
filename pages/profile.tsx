@@ -1,15 +1,27 @@
+import { useRouter } from 'next/router'
 import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import UserInfo from '../components/UserInfo'
 import Video from '../components/Video'
 import LayoutPage from '../layouts/LayoutPage'
+import { handleGetPosts } from '../redux/actions/postActions'
 import { dataUser,dataCategoriesProfile, dataLikedProfile,dataVideosProfile  } from '../utils/data'
+import { userURL } from '../utils/url'
 
 const profile = () => {
+  const router = useRouter()
+  const {user:_idUser} = router.query
+  const dispatch = useDispatch()
+  const posts = useSelector(state=>state.post.posts)
   const [active, setActive] = useState("Videos")
-  const [videos,setVideos] = useState<any[]>([])
-
+  console.log("data posts masuk di ui: ", posts)
   useEffect(()=>{
-    active=="Videos"?setVideos(dataVideosProfile):setVideos(dataLikedProfile)
+    const data = {
+      type : active=="Videos"?"posted":"bookmarked",
+      _idUser
+    }
+    console.log("data we eill send: ", data)
+    dispatch(handleGetPosts(data))    
   },[active])
 
   return (
@@ -29,7 +41,7 @@ const profile = () => {
               </ul>
               <div className='my-4 flex flex-col gap-10'>
                   {
-                    videos.map((data,i)=>(
+                    posts.map((data,i)=>(
                       <div key={i} className="md:w-[90%]">
                         <Video bookmark={""} url={data.video} type="profile"/>
                       </div>
@@ -42,4 +54,20 @@ const profile = () => {
   )
 }
 
+export const getServerSideProps = async(contex)=>{
+  try {
+    const {user : _idUser} = contex.query
+    const profileData = await fetch(`${userURL}/${_idUser}`).then(res=>res.json())
+    console.log("profileData.get: ", profileData)
+    return({
+      props :{
+
+      }
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 export default profile
+

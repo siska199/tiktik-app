@@ -9,6 +9,16 @@ export const queryCategories = `
 } | order(_createdAt desc) 
 `
 
+export const queryUserById = `
+*[_type=="user" && _id==$_idUser ]{
+  _id,
+  image,
+  name,
+  username,
+  "countFollowers" : count(followers),
+} | order(_createdAt desc)  
+`
+
 export const queryPosts = `
 *[_type=="post"]{
   _id,

@@ -21,6 +21,10 @@ export default NextAuth({
       token.id = token.sub;
       return token;
     },
+    async session({session, user,token}){
+      session.user.id = token.id
+      return session
+    },
     async signIn({ user, account, profile, email, credentials }) {
       await fetch(`${process.env.BASE_URL}/api/signIn`, {
         method: "POST",

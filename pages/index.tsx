@@ -64,7 +64,7 @@ export const getServerSideProps = async(context:any)=>{
     const token = await getToken({req:context.req, secret: process.env.JWT_SECRET})
     const {topic} = context.query
     const providers = await getProviders()
-    const url = topic && topic !="all" ?`${postsURL}?topic=${topic}&&idUser=${token?.id}`: `${postsURL}?idUser=${token?.id}`
+    const url = topic && topic !="all" ?`${postsURL}?type=category&&topic=${topic}&&_idUser=${token?.id}`: `${postsURL}?_idUser=${token?.id}`
     const posts = await fetch(url).then(res=>res.json())
     return{
       props :{

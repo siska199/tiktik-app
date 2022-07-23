@@ -1,4 +1,4 @@
-import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK } from './../actions-type/postTypeAction';
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK, HANDLE_GET_POSTS } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
@@ -6,6 +6,20 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
         type : HANDLE_MODAL_POST_DETAIL,
         payload : stateModal
     })
+}
+
+export const handleGetPosts: Function = (data)=>async(dispatch, getState)=>{
+    try {
+        console.log("datagetPost masok: ", data)
+        const resPosts = await fetch(`/api/posts?type=${data.type}&&_idUser=${data._idUser}`)
+        console.log("hasil dari action: ", resPosts)
+        return dispatch({
+            type : HANDLE_GET_POSTS,
+            payload : resPosts
+        })
+    } catch (error) {
+        throw error
+    }
 }
 
 export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{

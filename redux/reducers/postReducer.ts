@@ -1,8 +1,9 @@
-import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK } from './../actions-type/postTypeAction';
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK, HANDLE_GET_POSTS } from './../actions-type/postTypeAction';
 
 const initialState = {
     modalDetail : false,
-    post : {}
+    post : {},
+    posts : []
 }
 
 export const postReducer = (state=initialState, action:any)=>{
@@ -20,6 +21,8 @@ export const postReducer = (state=initialState, action:any)=>{
             return{...state}
         case HANDLE_ADD_REMOVE_BOOKMARK:
             return{...state}
+        case HANDLE_GET_POSTS:
+            return{...state, posts:action.payload}
         default:
             return{...state}
     }
