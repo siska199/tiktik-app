@@ -15,7 +15,7 @@ module.exports = {
         },
       },
       animation :{
-        'video-appear' : 'video 3s linear'
+        'video-appear' : 'video 1s linear'
       },
       screens: {
         sm: "576px",

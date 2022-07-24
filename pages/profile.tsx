@@ -15,7 +15,7 @@ const profile = ({userData}) => {
   const dispatch = useDispatch()
   const posts = useSelector(state=>state.post.posts)
   const [active, setActive] = useState("Videos")
-  
+
   useEffect(()=>{
     const data = {
       type : active=="Videos"?"posted":"bookmarked",
@@ -28,7 +28,7 @@ const profile = ({userData}) => {
     <LayoutPage type="profile">
         <div className='flex-[0.7] flex gap-10 flex-col flex-grow py-5 px-[3.5rem]'>
             <section>
-              <UserInfo image={dataUser.image} username={dataUser.username} name={dataUser.name} type="profile" />
+              <UserInfo image={userData?.image} username={userData?.username} name={userData?.name} type="profile" />
             </section>
 
             <section>

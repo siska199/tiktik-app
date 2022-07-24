@@ -16,7 +16,7 @@ export const queryUserById = `
   name,
   username,
   "countFollowers" : count(followers),
-} | order(_createdAt desc)  
+}[0] 
 `
 
 export const queryPosts = `

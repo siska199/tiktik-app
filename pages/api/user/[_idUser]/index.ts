@@ -10,6 +10,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
             const query = queryUserById
             const params = {_idUser}
             const dataProfile = await client.fetch(query, params)
+            console.log("dataProfile: ", dataProfile)
             res.status(200).json(dataProfile)
         } catch (error) {
             res.status(500).send(error)
