@@ -28,9 +28,9 @@ interface PropsIndex{
 }
 
 const Home: NextPage<PropsIndex> = ({providers, posts}) => {
+  const dispatch = useDispatch()
   const modalDetail = useSelector((state:any)=> state.post.modalDetail)
 
-  const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(handleGetProviders(providers))
   },[])

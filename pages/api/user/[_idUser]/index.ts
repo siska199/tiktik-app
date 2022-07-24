@@ -5,7 +5,6 @@ import client from '../../../../utils/sanityClient/sanity';
 export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     const {method} = req
     const {_idUser=""} = req.query
-    console.log("idUser mosok: ", _idUser)
     if(method=="GET"){
         try {
             const query = queryUserById

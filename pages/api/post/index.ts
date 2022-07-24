@@ -26,7 +26,6 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
                     query = queryPosts
                     break;
             }
-            console.log("query poseted: ", queryPosts)
             const params = {_idUser,topic}
             let dataPosts = await client.fetch(query, params)
             res.status(200).json(dataPosts)

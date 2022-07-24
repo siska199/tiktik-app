@@ -32,10 +32,10 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
-
   const customeStyle = {
     video : ""
   }
+  
   switch(type){
     case "profile":
       customeStyle.video = "rounded-lg w-full"
@@ -54,11 +54,11 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
     const observerVideo = new IntersectionObserver(handleIntersect,{
       threshold : 1.0,
     })
-    if(type=="post" && refVideo.current ){    
+    if(type=="profile" && refVideo.current ){   
       observerVideo.observe(refVideo.current)
     }
     return ()=>{
-      (type=="post" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
+      (type=="profile" && refVideo.current ) && observerVideo.unobserve(refVideo.current)
     }
   },[])
 
@@ -90,7 +90,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
     }
   }
   const handleIntersect = (entries, observer)=>{
-    type=="post" && entries.forEach((entry,i)=>{
+    entries.forEach((entry,i)=>{
       if(entry.isIntersecting){ 
         // entry.target.play()
         // setPlay(true)
@@ -112,16 +112,16 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   }
 
   return (
-    <section className='relative '>
+    <section className='relative'>
       {
-        (session && type=="detail") &&(
-        <div onClick={()=>handleBookmark()} className={`absolute ${type=="detail"&&"z-[99] shadow-md"} text-[1.5rem] z-[20] w-10 h-10 flex rounded-full group ${bookmark&&"hover:bg-slate-300"} hover:bg-slate-200 cursor-pointer right-2 top-2 `}>
-          <BsBookmarkHeart className={`m-auto ${bookmark&&"text-rose-600"} text-stone-500 `}/>
+        type=="detail" &&(
+        <div onClick={()=>handleBookmark()} className={`absolute ${type=="detail"&&"z-[99]"} text-[1.5rem] z-[20] w-10 h-10 flex rounded-full group ${bookmark&&"hover:bg-slate-300"} hover:bg-slate-200 cursor-pointer right-2 top-2 `}>
+          <BsBookmarkHeart style={{color:`${bookmark&&"red"}`}} className={`m-auto text-stone-500 `}/>
         </div>
         )
       }
       <video 
-        className={`cursor-pointer ${customeStyle.video}`}
+        className={`cursor-pointer ${customeStyle.video} animate-video-appear`}
         muted={muted}
         ref={refVideo} 
         src={url}
@@ -131,7 +131,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
       />
       {
         (type=="profile") && (
-        <div className={`absolute bottom-0 left-0 text-white border-none flex gap-3 p-2 text-[1.2rem]`}>
+        <div className={`absolute bottom-0 left-0 text-white border-none flex gap-3 p-2 text-[1.2rem] animate-video-appear`}>
           {
             play?(
               <AiOutlinePause className='cursor-pointer' onClick={()=>handlePausedUnpause()}/>

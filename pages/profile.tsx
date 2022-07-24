@@ -9,19 +9,18 @@ import { handleGetPosts } from '../redux/actions/postActions'
 import { dataUser,dataCategoriesProfile, dataLikedProfile,dataVideosProfile  } from '../utils/data'
 import { userURL } from '../utils/url'
 
-const profile = () => {
+const profile = ({userData}) => {
   const router = useRouter()
   const {user:_idUser} = router.query
   const dispatch = useDispatch()
   const posts = useSelector(state=>state.post.posts)
   const [active, setActive] = useState("Videos")
-  console.log("data posts masuk di ui: ", posts)
+  
   useEffect(()=>{
     const data = {
       type : active=="Videos"?"posted":"bookmarked",
       _idUser
     }
-    console.log("data we eill send: ", data)
     dispatch(handleGetPosts(data))    
   },[active])
 
@@ -62,11 +61,10 @@ const profile = () => {
 export const getServerSideProps = async(contex)=>{
   try {
     const {user : _idUser} = contex.query
-    const profileData = await fetch(`${userURL}/${_idUser}`).then(res=>res.json())
-    console.log("profileData.get: ", profileData)
+    const userData = await fetch(`${userURL}/${_idUser}`).then(res=>res.json())
     return({
       props :{
-
+        userData
       }
     })
   } catch (error) {

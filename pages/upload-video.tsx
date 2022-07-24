@@ -25,7 +25,6 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const categories = useSelector(state=>state.category.categories)
   
   useEffect(()=>{
-    console.log("run once")
     dispatch(handleGetCategories())
   },[])
   

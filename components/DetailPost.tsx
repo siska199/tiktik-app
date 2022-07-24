@@ -17,6 +17,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
   const dispatch = useDispatch()
   const post = useSelector(state=> state.post.post)
   const [render, setRender] = useState(false)
+  
   useEffect(()=>{
     dispatch(handleGetPost(_idPost))
   },[render])

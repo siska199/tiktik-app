@@ -8,6 +8,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes:{
+        video :{
+          from :{transform : 'translateX(-100px)'},
+          to :{transform : 'translateX(0px)'}
+        },
+      },
+      animation :{
+        'video-appear' : 'video 3s linear'
+      },
       screens: {
         sm: "576px",
         md: "768px",

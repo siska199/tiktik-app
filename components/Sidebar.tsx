@@ -1,15 +1,25 @@
 import Link from "next/link"
+import { useEffect } from "react"
 import {AiFillHome} from "react-icons/ai"
 import { useRouter } from "next/router"
+import { useSelector, useDispatch } from "react-redux"
 import TitleSectionSideNavbar from "./TitleSectionSideNavbar"
-import { dataTopics,dataSuggestedAccounts  } from "../utils/data"
 import Topic from "./Topic"
 import UserInfo from "./UserInfo"
 import Footer from "./Footer"
+import {dataSuggestedAccounts  } from "../utils/data"
+import { handleGetCategories } from "../redux/actions/categoryAction"
 
 const Sidebar = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
   const {topic} = router.query
+  const categories = useSelector(state=>state.category.categories)
+
+  useEffect(()=>{
+    dispatch(handleGetCategories())
+  },[])
+
   return (
     <section className="sticky top-[3.5rem] flex flex-col flex-[0.1] md:flex-[0.3] max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
         <Link href="/?topic=all">
@@ -25,8 +35,8 @@ const Sidebar = () => {
         <TitleSectionSideNavbar title="Popular Topics"/>
         <div className="flex flex-col md:flex-row flex-wrap gap-[1.5rem] md:gap-[0.4rem] my-3">
           {
-            dataTopics.map((data,i)=>(
-              <Topic key={i} number={i} active={data.title.toLowerCase()==topic?true:false} title={data.title} icon={data.icon} />
+            categories.map((data,i)=>(
+              <Topic key={i} number={i} active={data.name.toLowerCase()==topic?true:false} title={data.name.toLocaleLowerCase()} icon={data?.icon?.url} />
             ))
           }
         </div>

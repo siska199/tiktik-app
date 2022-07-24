@@ -10,9 +10,7 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
 
 export const handleGetPosts: Function = (data)=>async(dispatch, getState)=>{
     try {
-        console.log("datagetPost masok: ", data)
         const resPosts = await fetch(`/api/post?type=${data.type}&&_idUser=${data._idUser}`).then(res=>res.json())
-        console.log("hasil dari action: ", resPosts)
         return dispatch({
             type : HANDLE_GET_POSTS,
             payload : resPosts
@@ -103,7 +101,6 @@ export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=
 
 export const handleAddRemoveBookmark:Function = (data)=>async(dispatch, getState)=>{
     try {
-        console.log("data bookmark masuk action: ", data)
         const resBookmark = await fetch(`api/post/${data.idPost}/bookmark`,{
             method : "POST",
             headers:{
@@ -113,7 +110,6 @@ export const handleAddRemoveBookmark:Function = (data)=>async(dispatch, getState
                 bookmarkKeyUser : data.bookmarkKeyUser 
             })
         })
-        console.log("resBookmark: ", resBookmark)
         return dispatch({
             type : HANDLE_ADD_REMOVE_BOOKMARK,
             payload : resBookmark

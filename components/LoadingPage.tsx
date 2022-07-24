@@ -4,7 +4,7 @@ import animation from "../public/loading.json"
 
 const LoadingPage = () => {
   return (
-    <article className='w-screen bg-white h-screen flex justify-center items-center'>
+    <article className='w-full bg-white h-full flex justify-center items-center'>
         <div className=''>
           <Lottie
             animationData={animation} 
