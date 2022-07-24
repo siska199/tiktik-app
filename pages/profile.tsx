@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import LoadingPage from '../components/LoadingPage'
 import UserInfo from '../components/UserInfo'
 import Video from '../components/Video'
 import LayoutPage from '../layouts/LayoutPage'
@@ -41,11 +42,15 @@ const profile = () => {
               </ul>
               <div className='my-4 flex flex-col gap-10'>
                   {
-                    posts.map((data,i)=>(
-                      <div key={i} className="md:w-[90%]">
-                        <Video bookmark={""} url={data.video} type="profile"/>
-                      </div>
-                    ))
+                    posts.length>0?(
+                      posts.map((data,i)=>(
+                        <div key={i} className="md:w-[90%]">
+                          <Video bookmark={data.bookmark} url={data.video.url} _idPost={data._id} type="profile"/>
+                        </div>
+                      ))
+                    ):(
+                      <LoadingPage/>
+                    )
                   }
               </div>
             </section>

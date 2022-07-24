@@ -11,7 +11,7 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
 export const handleGetPosts: Function = (data)=>async(dispatch, getState)=>{
     try {
         console.log("datagetPost masok: ", data)
-        const resPosts = await fetch(`/api/posts?type=${data.type}&&_idUser=${data._idUser}`)
+        const resPosts = await fetch(`/api/post?type=${data.type}&&_idUser=${data._idUser}`).then(res=>res.json())
         console.log("hasil dari action: ", resPosts)
         return dispatch({
             type : HANDLE_GET_POSTS,
