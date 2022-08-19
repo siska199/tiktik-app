@@ -38,10 +38,10 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   
   switch(type){
     case "profile":
-      customeStyle.video = "rounded-lg w-full animate-video-appear"
+      customeStyle.video = "rounded-lg w-full "
       break;
     case "post":
-      customeStyle.video = "sm:rounded-lg animate-video-appear"
+      customeStyle.video = "sm:rounded-lg "
       break;
     case "detail":
       customeStyle.video = "lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"

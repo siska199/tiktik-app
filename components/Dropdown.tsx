@@ -21,8 +21,7 @@ interface DropdownProps {
 }
 
 const Dropdown : React.FC<DropdownProps> = ({label,dataCategory,dataCategories, handleOnChange}) => {
-  console.log(dataCategories)
-  console.log(dataCategory)
+
   return (
     <div className='flex flex-col'>
         <label className='font-medium'>Choose a {label}</label>

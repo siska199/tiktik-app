@@ -1,4 +1,4 @@
-import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK, HANDLE_GET_POSTS } from './../actions-type/postTypeAction';
+import { HANDLE_ADD_COMMENT, HANDLE_MODAL_POST_DETAIL, HANDLE_ADD_POST, HANDLE_GET_POST, HANDLE_ADD_REMOVE_LOVE, HANDLE_ADD_REMOVE_BOOKMARK, HANDLE_GET_POSTS, HANDLE_LOADING_POST } from './../actions-type/postTypeAction';
 import client from "../../utils/sanityClient/sanity"
 
 export const handleModalDetail:Function = (stateModal:boolean)=>{
@@ -50,7 +50,9 @@ export const handleAddPost:Function =(data:{video:any})=>async(dispatch:any, get
 
 export const handleGetPost:Function = (id:string) => async(dispatch:any, getState:any)=>{
     try {
+
         const post = await fetch(`api/post/${id}`).then(res=>res.json())
+    
         return dispatch({
             type : HANDLE_GET_POST,
             payload : post
@@ -117,4 +119,12 @@ export const handleAddRemoveBookmark:Function = (data:{idPost:string;bookmarkKey
     } catch (error) {
         throw error
     }
+}
+
+
+export const handleLoadingPost:Function = (loadingState:boolean)=>{
+    return({
+        type: HANDLE_LOADING_POST,
+        payload : loadingState
+    })
 }

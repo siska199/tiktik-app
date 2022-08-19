@@ -7,10 +7,11 @@ import LoadingPage from '../components/LoadingPage'
 import UserInfo from '../components/UserInfo'
 import Video from '../components/Video'
 import LayoutPage from '../layouts/LayoutPage'
-import { handleGetPosts } from '../redux/actions/postActions'
+import { handleGetPosts, handleLoadingPost } from '../redux/actions/postActions'
 import {dataCategoriesProfile, } from '../utils/data'
 import { userURL } from '../utils/url'
 import {RootState} from "../redux/store"
+import NotFound from '../components/NotFound'
 
 interface PropsIndex {
   userData : {
@@ -34,6 +35,7 @@ const profile:NextPage<PropsIndex>= ({userData}) => {
   const {user:_idUser} = router.query
   const dispatch = useDispatch()
   const posts:any = useSelector<RootState>(state=>state.post.posts)
+  const loadingPost= useSelector<RootState>(state=>state.post.loadingPost)
   const [active, setActive] = useState("Videos")
 
   useEffect(()=>{
@@ -41,7 +43,10 @@ const profile:NextPage<PropsIndex>= ({userData}) => {
       type : active=="Videos"?"posted":"bookmarked",
       _idUser
     }
-    dispatch(handleGetPosts(data))    
+    dispatch(handleLoadingPost(true))
+    dispatch(handleGetPosts(data)).then(()=>{
+      dispatch(handleLoadingPost(false))
+    })    
   },[active])
 
   return (
@@ -60,17 +65,25 @@ const profile:NextPage<PropsIndex>= ({userData}) => {
                 }
               </ul>
               <div className='my-4 flex flex-col gap-10'>
-                  {
-                    posts.length>0?(
-                      posts.map((data:Post,i:number)=>(
-                        <div key={i} className="md:w-[90%]">
-                          <Video bookmark={data.bookmark} url={data.video.url} _idPost={data._id} type="profile"/>
-                        </div>
-                      ))
-                    ):(
-                      <LoadingPage/>
-                    )
-                  }
+                {
+                  loadingPost?(
+                    <LoadingPage/>
+                  ):(
+                    <>
+                      {
+                        posts.length>0 ? (
+                          posts.map((data:Post,i:number)=>(
+                            <div key={i} className="md:w-[90%]">
+                              <Video bookmark={data.bookmark} url={data.video.url} _idPost={data._id} type="profile"/>
+                            </div>
+                          ))
+                        ):(
+                          <NotFound type="video"/>
+                        )
+                      }
+                    </>
+                  )
+                }
               </div>
             </section>
         </div>
