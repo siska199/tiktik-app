@@ -3,6 +3,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import {RootState} from "../redux/store"
 
+interface Provider {
+    id : string
+    name : string
+}
+
 const Auth = () => {
     const providers = useSelector((state:RootState)=>state.auth.providers)
 

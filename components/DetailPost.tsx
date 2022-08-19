@@ -20,10 +20,31 @@ interface Comment {
   }
 }
 
+interface Post  {
+  _createdAt: string
+  _id: string
+  bookmark:string | undefined
+  bookmarks: {}[] | undefined | null
+  caption: string
+  category: string
+  comments:  [] | undefined | null
+  countLikes: number | null
+  like: boolean | undefined | null
+  likes: {}[] | undefined | null
+  postBy: {
+    image: string
+    name: string,
+    username: string
+  }
+  video: {
+    _id: string,
+    url: string
+  }
+}
 const DetailPost : React.FC<Props> = ({ _idPost}) => {
   const {data:session} = useSession() 
   const dispatch = useDispatch()
-  const post:any = useSelector<RootState>(state=> state.post.post)
+  const post = useSelector<RootState,Post>(state=> state.post.post)
   const [render, setRender] = useState(false)
   
   useEffect(()=>{
