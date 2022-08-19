@@ -10,7 +10,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
     if(method=="POST"){
         try {
             const _idUser = token? token.id : ""
-            const {_idPost} = req.query
+            const {_idPost}:any = req.query
             const {body} = req
             let resLike 
             if(body.likeKeyUser){

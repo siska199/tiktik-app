@@ -9,6 +9,7 @@ import {FiSearch} from "react-icons/fi"
 import {dataIconAuthProviders} from "../utils/data"
 import Tooltip from "./Tooltip"
 import {useSelector } from "react-redux"
+import { RootState } from "../redux/store"
 
 interface NavbarProps {
   type? : string;
@@ -16,9 +17,9 @@ interface NavbarProps {
 }
 
 const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
-  const tooltipAuth = useSelector(state=>state.auth.tooltipAuth)
+  const tooltipAuth:any = useSelector<RootState>(state=>state.auth.tooltipAuth)
   const router = useRouter()
-  const {data:session} = useSession()
+  const {data:session}:any = useSession()
   const handleUploadOnClick = ()=>{
     router.push("/upload-video")
   }
@@ -42,7 +43,7 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
                 <span className="hidden md:block ">Upload</span>
               </button>
               <img onClick={()=>router.push(`/profile?user=${session?.user?.id}`)} className="w-10 rounded-full border-[0.005rem] cursor-pointer" src={session?.user?.image}/>
-              <button onClick={()=>signOut('google')} className="border-[0.005rem] p-2 flex rounded-full">
+              <button onClick={()=>signOut()} className="border-[0.005rem] p-2 flex rounded-full">
                 <AiOutlineLogout className="m-auto text-[1.2rem] text-rose-700"/>       
               </button>
             </>
@@ -57,7 +58,7 @@ const Navbar : React.FC<NavbarProps> = ({type, providers}) => {
                       </span>
                         {dataIconAuthProviders[i].icon}
                     </button>
-                    {tooltipAuth&& <Tooltip message={"Log in here"}/>}
+                    {tooltipAuth && <Tooltip message={"Log in here"}/>}
                   </div>
                 ))
               }

@@ -18,5 +18,7 @@ if(typeof window !=="undefined"){
 
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 
+export type AppDispatch = typeof store.dispatch; // Here we export the store's dispatch type
+export type RootState = ReturnType<typeof store.getState>; // Here we export the store's state
 
 export default store

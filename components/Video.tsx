@@ -12,10 +12,10 @@ import Modal from "../layouts/Modal"
 
 interface Props {
   url : string  | undefined; 
-  _idPost?:string | undefined;
+  _idPost?:string ;
   type? : string;
   bookmark? : string; 
-  setRender? : React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  setRender? : React.Dispatch<React.SetStateAction<boolean>>
   render? : boolean;
 }
 
@@ -30,7 +30,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   const dispatch = useDispatch()
   const refVideo = useRef<HTMLVideoElement | null>(null)
   const [modalDetail, setModalDetail] = useState<boolean>(false)
-  const [play, setPlay] = useState<boolean>(false)
+  const [play, setPlay] = useState<boolean>(true)
   const [muted, setMuted] = useState<boolean>(false)
   const customeStyle = {
     video : ""
@@ -54,7 +54,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
     const observerVideo = new IntersectionObserver(handleIntersect,{
       threshold : 1.0,
     })
-    if(type=="profile" && refVideo.current ){   
+    if((type=="profile" || type=="post")  && refVideo.current ){   
       observerVideo.observe(refVideo.current)
     }
     return ()=>{
@@ -89,8 +89,8 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
         break;
     }
   }
-  const handleIntersect = (entries, observer)=>{
-    entries.forEach((entry,i)=>{
+  const handleIntersect = (entries:any, observer:any)=>{
+    entries.forEach((entry:any,i:number)=>{
       if(entry.isIntersecting){ 
         // entry.target.play()
         // setPlay(true)
@@ -107,7 +107,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
       bookmarkKeyUser: bookmark
     }
     dispatch(handleAddRemoveBookmark(dataBookmark)).then(()=>{
-      setRender(!render)
+      setRender && setRender(!render)
     })
   }
 
@@ -120,15 +120,19 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
         </div>
         )
       }
-      <video 
-        className={`cursor-pointer ${customeStyle.video} `}
-        muted={muted}
-        ref={refVideo} 
-        src={url}
-        onEnded= {()=>setPlay(false)}
-        onClick={()=>handleOnClick()}
-        controls={type =="post" || type=="profile"?false:true}
-      />
+      {
+        url && (
+          <video 
+            className={`cursor-pointer ${customeStyle.video} `}
+            muted={muted}
+            ref={refVideo} 
+            src={url}
+            onEnded= {()=>setPlay(false)}
+            onClick={()=>handleOnClick()}
+            controls={type =="post" || type=="profile"?false:true}
+          />
+        )
+      }
       {
         (type=="profile") && (
         <div className={`absolute bottom-0 left-0 text-white border-none flex gap-3 p-2 text-[1.2rem] animate-video-appear`}>
@@ -153,7 +157,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
       {
         modalDetail &&
         <Modal type="detail" modal={modalDetail} setModal={setModalDetail}>
-          <DetailPost _idPost={_idPost} />
+          <DetailPost _idPost={_idPost?_idPost:""} />
         </Modal>
       }
     </section>

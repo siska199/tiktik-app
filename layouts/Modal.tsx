@@ -25,7 +25,7 @@ const Modal : React.FC<ModalProps> = ({children, type, modal, setModal}) => {
   }
 
   return (
-    <article className={`fixed z-30 top-0 left-0 w-screen h-screen flex bg-black/50 sm:overflow-y-scroll flex flex-col`}>
+    <article className={`fixed z-30 top-0 left-0 w-screen h-screen bg-black/50 sm:overflow-y-scroll flex flex-col`}>
       <AiOutlineClose onClick={()=>handleCloseModal()} className='hidden sm:block absolute right-5 top-5 text-white font-bold text-[1.4rem] cursor-pointer '/>
         <section className='w-full h-10  bg-white sm:hidden flex items-center px-3 py-2'>
             <BsArrowLeft className='text-[1.5rem] cursor-pointer'  onClick={()=>handleCloseModal()} />

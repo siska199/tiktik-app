@@ -12,6 +12,7 @@ import LoadingIcon from '../components/LoadingIcon'
 import {handleGetCategories} from "../redux/actions/categoryAction"
 import { handleAddPost } from '../redux/actions/postActions'
 import { handleFormValidationPost } from '../utils/function/formValidation'
+import { RootState } from '../redux/store'
 
 interface PropsUploadVideo{
   categories? : {
@@ -22,10 +23,10 @@ interface PropsUploadVideo{
 
 const uploadVideo : NextPage<PropsUploadVideo> = () => {
   const dispatch = useDispatch()
-  const categories = useSelector(state=>state.category.categories)
+  const categories = useSelector<RootState>(state=>state.category.categories)
   
   useEffect(()=>{
-    dispatch(handleGetCategories())
+    dispatch<any>(handleGetCategories())
   },[])
   
   const initialForm = {
@@ -57,7 +58,7 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
       video : initialForm.video
     })
   }
-  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
+  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement |any>)=>{
     const name = e.target.name.toLowerCase()
     let data : File | string|object = ""
     switch(name){

@@ -1,3 +1,5 @@
+import { GetServerSideProps } from 'next'
+import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,14 +8,32 @@ import UserInfo from '../components/UserInfo'
 import Video from '../components/Video'
 import LayoutPage from '../layouts/LayoutPage'
 import { handleGetPosts } from '../redux/actions/postActions'
-import { dataUser,dataCategoriesProfile, dataLikedProfile,dataVideosProfile  } from '../utils/data'
+import {dataCategoriesProfile, } from '../utils/data'
 import { userURL } from '../utils/url'
+import {RootState} from "../redux/store"
 
-const profile = ({userData}) => {
+interface PropsIndex {
+  userData : {
+    image : string
+    username : string
+    name : string
+  }
+}
+
+interface Post {
+  bookmark : string
+  _id : string
+  video : {
+    url :string
+
+  }
+}
+
+const profile:NextPage<PropsIndex>= ({userData}) => {
   const router = useRouter()
   const {user:_idUser} = router.query
   const dispatch = useDispatch()
-  const posts = useSelector(state=>state.post.posts)
+  const posts:any = useSelector<RootState>(state=>state.post.posts)
   const [active, setActive] = useState("Videos")
 
   useEffect(()=>{
@@ -42,7 +62,7 @@ const profile = ({userData}) => {
               <div className='my-4 flex flex-col gap-10'>
                   {
                     posts.length>0?(
-                      posts.map((data,i)=>(
+                      posts.map((data:Post,i:number)=>(
                         <div key={i} className="md:w-[90%]">
                           <Video bookmark={data.bookmark} url={data.video.url} _idPost={data._id} type="profile"/>
                         </div>
@@ -58,7 +78,7 @@ const profile = ({userData}) => {
   )
 }
 
-export const getServerSideProps = async(contex)=>{
+export const getServerSideProps : GetServerSideProps = async(contex)=>{
   try {
     const {user : _idUser} = contex.query
     const userData = await fetch(`${userURL}/${_idUser}`).then(res=>res.json())

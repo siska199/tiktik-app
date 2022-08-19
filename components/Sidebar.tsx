@@ -9,15 +9,22 @@ import UserInfo from "./UserInfo"
 import Footer from "./Footer"
 import {dataSuggestedAccounts  } from "../utils/data"
 import { handleGetCategories } from "../redux/actions/categoryAction"
+import { RootState } from "../redux/store"
+
+interface Category {
+  name : string
+  icon : {
+    url : string
+  }
+}
 
 const Sidebar = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const {topic} = router.query
-  const categories = useSelector(state=>state.category.categories)
-
+  const categories:any = useSelector<RootState>(state=>state.category.categories)
   useEffect(()=>{
-    dispatch(handleGetCategories())
+    dispatch<any>(handleGetCategories())
   },[])
 
   return (
@@ -35,7 +42,7 @@ const Sidebar = () => {
         <TitleSectionSideNavbar title="Popular Topics"/>
         <div className="flex flex-col md:flex-row flex-wrap gap-[1.5rem] md:gap-[0.4rem] my-3">
           {
-            categories.map((data,i)=>(
+            categories.map((data:Category,i:number)=>(
               <Topic key={i} number={i} active={data.name.toLowerCase()==topic?true:false} title={data.name.toLocaleLowerCase()} icon={data?.icon?.url} />
             ))
           }

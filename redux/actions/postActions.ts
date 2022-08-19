@@ -8,7 +8,7 @@ export const handleModalDetail:Function = (stateModal:boolean)=>{
     })
 }
 
-export const handleGetPosts: Function = (data)=>async(dispatch, getState)=>{
+export const handleGetPosts: Function = (data:{type:string;_idUser:string})=>async(dispatch:any, getState:any)=>{
     try {
         const resPosts = await fetch(`/api/post?type=${data.type}&&_idUser=${data._idUser}`).then(res=>res.json())
         return dispatch({
@@ -20,7 +20,7 @@ export const handleGetPosts: Function = (data)=>async(dispatch, getState)=>{
     }
 }
 
-export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
+export const handleAddPost:Function =(data:{video:any})=>async(dispatch:any, getState:any)=>{
     try {
         const videoUploadInfo = await client.assets.upload('file', data.video,{
                 contentType : data.video.type,
@@ -48,7 +48,7 @@ export const handleAddPost:Function =(data)=>async(dispatch, getState)=>{
 
 }
 
-export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>{
+export const handleGetPost:Function = (id:string) => async(dispatch:any, getState:any)=>{
     try {
         const post = await fetch(`api/post/${id}`).then(res=>res.json())
         return dispatch({
@@ -60,7 +60,7 @@ export const handleGetPost:Function = (id:string) => async(dispatch, getState)=>
     }
 }
 
-export const handleAddComment: Function = (data)=>async(dispatch, getState)=>{
+export const handleAddComment: Function = (data:{idPost:string;comment:string;})=>async(dispatch:any, getState:any)=>{
     try {    
         const resAddComment = await fetch(`api/post/${data.idPost}/comment`,{
             method:"POST",
@@ -78,7 +78,7 @@ export const handleAddComment: Function = (data)=>async(dispatch, getState)=>{
     }
 }
 
-export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=>{
+export const handleAddRemoveLove : Function = (data:{idPost:string;likeKeyUser:string})=>async(dispatch:any, getState:any)=>{
     try {
         const resLike = await fetch(`api/post/${data.idPost}/love`,{
             method:"POST",
@@ -99,7 +99,7 @@ export const handleAddRemoveLove : Function = (data)=>async(dispatch, getState)=
     }
 }
 
-export const handleAddRemoveBookmark:Function = (data)=>async(dispatch, getState)=>{
+export const handleAddRemoveBookmark:Function = (data:{idPost:string;bookmarkKeyUser:string})=>async(dispatch:any, getState:any)=>{
     try {
         const resBookmark = await fetch(`api/post/${data.idPost}/bookmark`,{
             method : "POST",

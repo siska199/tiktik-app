@@ -6,9 +6,8 @@ import client from '../../../../../utils/sanityClient/sanity';
 export default async function handler(req:NextApiRequest,res:NextApiResponse){
     const token = await getToken({req,secret})
     const _idUser = token ? token.id : ""
-    const {_idPost} = req.query
+    const {_idPost}:any = req.query
     const {method} = req
-    console.log("masokkk bookmark")
     if(method=="POST"){
         try {
             const {body} = req

@@ -7,15 +7,23 @@ import UserInfo from './UserInfo';
 import AddComment from './AddComment';
 import { useSession } from 'next-auth/react';
 import NotFound from './NotFound';
-
+import {RootState} from "../redux/store"
 interface Props {
-  _idPost : string | string[] | undefined;
+  _idPost : string 
+}
+
+interface Comment {
+  field : string
+  postBy : {
+    username:string
+    image:string
+  }
 }
 
 const DetailPost : React.FC<Props> = ({ _idPost}) => {
   const {data:session} = useSession() 
   const dispatch = useDispatch()
-  const post = useSelector(state=> state.post.post)
+  const post:any = useSelector<RootState>(state=> state.post.post)
   const [render, setRender] = useState(false)
   
   useEffect(()=>{
@@ -56,7 +64,7 @@ const DetailPost : React.FC<Props> = ({ _idPost}) => {
                 <div className='h-full flex flex-col p-5'>
                   <div className='flex flex-col gap-3 sm:max-h-[30vh] overflow-y-scroll'>
                     {
-                      post.comments ? post.comments.map((data,i)=>(
+                      post.comments ? post.comments.map((data:Comment,i:number)=>(
                         <div key={i}>
                           <UserInfo username={data.postBy.username} image={data.postBy.image} type="comment" comment={data.field} />
                         </div>

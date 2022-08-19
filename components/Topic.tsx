@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from "next/link"
 interface Props {
-  title : String;
-  icon : JSX.Element;
+  title : string;
+  icon : string;
   active : boolean;
   number : number;
 }

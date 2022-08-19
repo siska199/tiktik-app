@@ -2,7 +2,9 @@ import { HANDLE_TOOLTIP_AUTH, HANDLE_GET_PROVIDERS_DATA } from '../actions-type/
 
 
 const initialState = {
-    tooltipAuth : false
+    tooltipAuth : false,
+    providers : {
+    }
 }
 
 const authReducer = (state=initialState, action:any)=>{
