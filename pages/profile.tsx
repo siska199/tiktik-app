@@ -30,7 +30,7 @@ interface Post {
   }
 }
 
-const profile:NextPage<PropsIndex>= ({userData}) => {
+const Profile:NextPage<PropsIndex>= ({userData}) => {
   const router = useRouter()
   const {user:_idUser} = router.query
   const dispatch = useDispatch()
@@ -105,5 +105,5 @@ export const getServerSideProps : GetServerSideProps = async(contex)=>{
   }
 }
 
-export default profile
+export default Profile
 

@@ -21,7 +21,7 @@ interface PropsUploadVideo{
   }[]
 }
 
-const uploadVideo : NextPage<PropsUploadVideo> = () => {
+const UploadVideo : NextPage<PropsUploadVideo> = () => {
   const dispatch = useDispatch()
   const categories = useSelector<RootState>(state=>state.category.categories)
   
@@ -184,5 +184,5 @@ const uploadVideo : NextPage<PropsUploadVideo> = () => {
   )
 }
 
-export default uploadVideo
+export default UploadVideo
 
