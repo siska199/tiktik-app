@@ -110,7 +110,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   }
 
   return (
-    <section className='relative'>
+    <section className='relative '>
       {
         type=="detail" &&(
         <div onClick={()=>handleBookmark()} className={`absolute ${type=="detail"&&"z-[99]"} text-[1.5rem] z-[20] w-10 h-10 flex rounded-full group ${bookmark&&"hover:bg-slate-300"} hover:bg-slate-200 cursor-pointer right-2 top-2 `}>
@@ -122,6 +122,7 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
         url && (
           <div className={`cursor-pointer ${videoStyle}`}>
             <video 
+              className='w-full'
               muted={muted}
               ref={refVideo} 
               src={url}
