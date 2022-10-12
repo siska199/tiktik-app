@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import {getToken} from "next-auth/jwt"
 import { secret } from "./utils/constanta";
+
 export async function middleware(req:NextRequest){
     try {
         const {pathname} = req.nextUrl
@@ -12,7 +13,7 @@ export async function middleware(req:NextRequest){
         if(authPages.includes(pathname)){
             const userData = await getToken({
                 req,
-                secret ,
+                secret,
             })
             const url = req.nextUrl.clone()
             url.pathname = "/"

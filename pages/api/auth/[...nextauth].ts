@@ -1,11 +1,13 @@
 import NextAuth from "next-auth";
 import GooglrProvider from "next-auth/providers/google";
 
+
 export default NextAuth({
   providers: [
     GooglrProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId : process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      
     }),
   ],
   pages: {
@@ -22,8 +24,7 @@ export default NextAuth({
       return token;
     },
     async session({session, user,token}){
-      session.user.id = token.id
-      return session
+      return {...session, id : token?.id}
     },
     async signIn({ user, account, profile, email, credentials }) {
       await fetch(`${process.env.BASE_URL}/api/signIn`, {
@@ -36,4 +37,5 @@ export default NextAuth({
       return true;
     },
   },
+  debug: false,
 });

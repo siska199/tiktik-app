@@ -32,19 +32,17 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
   const [modalDetail, setModalDetail] = useState<boolean>(false)
   const [play, setPlay] = useState<boolean>(true)
   const [muted, setMuted] = useState<boolean>(false)
-  const customeStyle = {
-    video : ""
-  }
   
+  let videoStyle=""
   switch(type){
     case "profile":
-      customeStyle.video = "rounded-lg w-full "
+      videoStyle = "rounded-lg w-full"
       break;
     case "post":
-      customeStyle.video = "sm:rounded-lg "
+      videoStyle = "sm:rounded-lg"
       break;
     case "detail":
-      customeStyle.video = "lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"
+      videoStyle = "lg:w-[50vw] md:w-[35vw] sm:w-[40vw] w-full relative z-10"
       break;
     default:
       break;
@@ -122,15 +120,16 @@ const Video : React.FC<Props> = ({url, _idPost, type, bookmark, setRender, rende
       }
       {
         url && (
-          <video 
-            className={`cursor-pointer ${customeStyle.video} `}
-            muted={muted}
-            ref={refVideo} 
-            src={url}
-            onEnded= {()=>setPlay(false)}
-            onClick={()=>handleOnClick()}
-            controls={type =="post" || type=="profile"?false:true}
-          />
+          <div className={`cursor-pointer ${videoStyle}`}>
+            <video 
+              muted={muted}
+              ref={refVideo} 
+              src={url}
+              onEnded= {()=>setPlay(false)}
+              onClick={()=>handleOnClick()}
+              controls={type =="post" || type=="profile"?false:true}
+            />
+          </div>
         )
       }
       {

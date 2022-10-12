@@ -3,6 +3,7 @@ import { GiCakeSlice, GiGalaxy, GiLipstick } from 'react-icons/gi';
 import { FaPaw, FaMedal, FaGamepad, } from 'react-icons/fa';
 import {FcGoogle} from "react-icons/fc"
 import { IconType } from 'react-icons';
+//https://github.com/nextauthjs/next-auth-typescript-example/tree/main/types
 interface dataTopics{
     title :string;
     icon : JSX.Element
